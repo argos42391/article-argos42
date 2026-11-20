@@ -4,65 +4,82 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quiz Expérimentation Animale — ARGOS 42</title>
+  <!-- Polices officielles de la charte ARGOS 42 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1b4332;      /* Vert profond engagé */
-      --accent: #d97706;       /* Touche chaude */
-      --bg: #f8faf9;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --ok: #15803d;
-      --ok-bg: #dcfce7;
-      --ko: #b91c1c;
-      --ko-bg: #fee2e2;
+      --caramel: #a4470e;       /* Caramel principal / Vesuvius */
+      --vermillon: #df5f29;     /* Orange Vermillon */
+      --beige: #e2d6c5;         /* Beige - Fond principal / Bone */
+      --vanille: #fcfaf2;       /* Vanille */
+      --discret: #f4f2ee;       /* Fond discret */
+      --chocolat: #2e2214;      /* Chocolat */
+      --chocolat-doux: #5c4b3b;
+      --ok: #1e6b38;
+      --ok-bg: #e6f4ea;
+      --ko: #b3261e;
+      --ko-bg: #fce8e6;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Roboto', sans-serif;
       background: transparent;
-      color: var(--text);
+      color: var(--chocolat);
       padding: 8px;
     }
     .quiz-box {
       max-width: 680px;
       margin: 0 auto;
-      background: var(--card);
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 24px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      background: var(--vanille);
+      border: 2px solid var(--beige);
+      border-radius: 16px;
+      padding: 26px 28px;
+      box-shadow: 0 6px 20px rgba(46, 34, 20, 0.06);
     }
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 12px;
+    }
+    .brand {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 22px;
+      color: var(--caramel);
+      letter-spacing: 0.02em;
+    }
+    .counter {
       font-size: 13px;
-      font-weight: 600;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      font-weight: 700;
+      color: var(--chocolat-doux);
+      background: var(--beige);
+      padding: 4px 12px;
+      border-radius: 99px;
     }
     .progress-bar {
       width: 100%;
-      height: 6px;
-      background: #e5e7eb;
+      height: 8px;
+      background: var(--beige);
       border-radius: 99px;
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .progress-fill {
       height: 100%;
       width: 20%;
-      background: var(--primary);
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, var(--caramel), var(--vermillon));
+      border-radius: 99px;
+      transition: width 0.35s ease;
     }
     h2 {
+      font-family: 'Roboto', sans-serif;
       font-size: 19px;
+      font-weight: 700;
       line-height: 1.4;
       margin-bottom: 18px;
-      color: #111827;
+      color: var(--chocolat);
     }
     .options {
       display: flex;
@@ -70,26 +87,29 @@
       gap: 10px;
     }
     button.opt {
+      font-family: 'Roboto', sans-serif;
       text-align: left;
-      padding: 13px 16px;
-      border: 2px solid #e5e7eb;
-      border-radius: 10px;
-      background: #fff;
+      padding: 14px 18px;
+      border: 2px solid var(--beige);
+      border-radius: 12px;
+      background: #ffffff;
       font-size: 15px;
-      color: var(--text);
+      line-height: 1.4;
+      color: var(--chocolat);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.18s ease;
       font-weight: 500;
     }
     button.opt:hover:not(:disabled) {
-      border-color: var(--primary);
-      background: #f0fdf4;
+      border-color: var(--caramel);
+      background: var(--discret);
+      transform: translateY(-1px);
     }
     button.opt.correct {
       border-color: var(--ok);
       background: var(--ok-bg);
       color: var(--ok);
-      font-weight: 600;
+      font-weight: 700;
     }
     button.opt.wrong {
       border-color: var(--ko);
@@ -99,66 +119,85 @@
     button.opt:disabled { cursor: default; }
     .feedback {
       margin-top: 16px;
-      padding: 14px;
-      border-radius: 10px;
-      background: #f3f4f6;
-      font-size: 14px;
-      line-height: 1.5;
+      padding: 15px 18px;
+      border-radius: 12px;
+      background: var(--discret);
+      border-left: 4px solid var(--caramel);
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--chocolat);
       display: none;
     }
     .feedback.show { display: block; }
     .next-btn, .cta-btn {
+      font-family: 'Roboto', sans-serif;
       margin-top: 18px;
       display: inline-block;
-      padding: 12px 20px;
-      background: var(--primary);
-      color: #fff;
+      padding: 12px 22px;
+      background: var(--caramel);
+      color: #ffffff;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       text-decoration: none;
+      transition: background 0.2s ease;
+    }
+    .next-btn:hover, .cta-btn:hover {
+      background: var(--vermillon);
     }
     .next-btn { display: none; }
     .next-btn.show { display: inline-block; }
-    .result { text-align: center; padding: 10px 0; }
+    .result { text-align: center; padding: 12px 0 6px; }
     .score {
-      font-size: 40px;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 8px;
+      font-family: 'Kaushan Script', cursive;
+      font-size: 46px;
+      color: var(--caramel);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .result h2 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--chocolat);
+      margin-bottom: 10px;
     }
     .result p {
       font-size: 15px;
-      line-height: 1.5;
-      color: var(--muted);
-      margin-bottom: 18px;
+      line-height: 1.6;
+      color: var(--chocolat-doux);
+      max-width: 520px;
+      margin: 0 auto 20px;
     }
     .actions {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       justify-content: center;
       flex-wrap: wrap;
     }
+    .actions .cta-btn { margin-top: 0; }
     .restart-btn {
-      margin-top: 18px;
-      padding: 12px 18px;
-      background: #e5e7eb;
-      color: var(--text);
+      font-family: 'Roboto', sans-serif;
+      padding: 12px 20px;
+      background: var(--beige);
+      color: var(--chocolat);
       border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
+      border-radius: 10px;
+      font-size: 14.5px;
+      font-weight: 700;
       cursor: pointer;
+      transition: opacity 0.2s ease;
     }
+    .restart-btn:hover { opacity: 0.85; }
   </style>
 </head>
 <body>
   <div class="quiz-box" id="quiz">
     <div class="header">
-      <span>Quiz express • ARGOS 42</span>
-      <span id="counter">Question 1 / 5</span>
+      <span class="brand">Le quiz d'Argos 42</span>
+      <span class="counter" id="counter">Question 1 / 5</span>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
     <div id="content">
@@ -271,9 +310,9 @@
         <div class="result">
           <div class="score">${score} / ${questions.length}</div>
           <h2>${score >= 4 ? "Incollable sur le sujet !" : "L’essentiel en 45 secondes"}</h2>
-          <p>En France, les freins à la sortie de l’expérimentation animale sont surtout politiques et culturels. Aidez ARGOS 42 à faire bouger les lignes.</p>
+          <p>En France, les freins à la sortie de l’expérimentation animale sont surtout politiques et culturels. Aidez Argos 42 à faire bouger les lignes.</p>
           <div class="actions">
-            <a class="cta-btn" href="https://argos42.org" target="_top">Soutenir ARGOS 42</a>
+            <a class="cta-btn" href="https://argos42.org/soutenez-lassociation-argos-42/" target="_top">Soutenir Argos 42</a>
             <button class="restart-btn" onclick="location.reload()">Rejouer</button>
           </div>
         </div>
