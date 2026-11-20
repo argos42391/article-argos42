@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Expérimentation Animale — ARGOS 42</title>
+  <style>
+    :root {
+      --primary: #1b4332;      /* Vert profond engagé */
+      --accent: #d97706;       /* Touche chaude */
+      --bg: #f8faf9;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --ok: #15803d;
+      --ok-bg: #dcfce7;
+      --ko: #b91c1c;
+      --ko-bg: #fee2e2;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: transparent;
+      color: var(--text);
+      padding: 8px;
+    }
+    .quiz-box {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 20%;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+    h2 {
+      font-size: 19px;
+      line-height: 1.4;
+      margin-bottom: 18px;
+      color: #111827;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    button.opt {
+      text-align: left;
+      padding: 13px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      background: #fff;
+      font-size: 15px;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-weight: 500;
+    }
+    button.opt:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #f0fdf4;
+    }
+    button.opt.correct {
+      border-color: var(--ok);
+      background: var(--ok-bg);
+      color: var(--ok);
+      font-weight: 600;
+    }
+    button.opt.wrong {
+      border-color: var(--ko);
+      background: var(--ko-bg);
+      color: var(--ko);
+    }
+    button.opt:disabled { cursor: default; }
+    .feedback {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #f3f4f6;
+      font-size: 14px;
+      line-height: 1.5;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .next-btn, .cta-btn {
+      margin-top: 18px;
+      display: inline-block;
+      padding: 12px 20px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .next-btn { display: none; }
+    .next-btn.show { display: inline-block; }
+    .result { text-align: center; padding: 10px 0; }
+    .score {
+      font-size: 40px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .result p {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .restart-btn {
+      margin-top: 18px;
+      padding: 12px 18px;
+      background: #e5e7eb;
+      color: var(--text);
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-box" id="quiz">
+    <div class="header">
+      <span>Quiz express • ARGOS 42</span>
+      <span id="counter">Question 1 / 5</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+    <div id="content">
+      <h2 id="question"></h2>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="nextBtn">Question suivante →</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "Quel pourcentage des médicaments testés avec succès sur l’animal arrive réellement sur le marché humain ?",
+        opts: ["Environ 50 %", "Environ 25 %", "Seulement 5 %"],
+        answer: 2,
+        info: "D’après les données rappelées par le Dr Roland Cash (Transcience), 95 % des candidats médicaments échouent chez l’humain, notamment à cause d’une toxicité non détectée chez l’animal."
+      },
+      {
+        q: "Quelle place occupe la France en Europe pour le nombre d’animaux utilisés dans des procédures expérimentales ?",
+        opts: ["1re place", "2e place (juste derrière la Norvège)", "5e place"],
+        answer: 1,
+        info: "Sur les chiffres européens, la France arrive 2e derrière la Norvège (qui utilise massivement des poissons en pisciculture), notamment à cause de la production d’anticorps."
+      },
+      {
+        q: "Que sont les « organoïdes » évoqués par la directrice du FC3R ?",
+        opts: [
+          "Des mini-organes humains cultivés en 3D sans animal",
+          "Des robots qui remplacent les souris",
+          "Des animaux génétiquement modifiés"
+        ],
+        answer: 0,
+        info: "Cultivés à partir de cellules humaines (par exemple de peau), ils reproduisent en 3D un avatar d’intestin, de cœur ou de cerveau pour tester des traitements sans recourir à l’animal."
+      },
+      {
+        q: "Pourquoi le « test de nage forcée » (placer un rat dans un tube d’eau) est-il toujours pratiqué ?",
+        opts: [
+          "Parce qu’aucune alternative n’existe",
+          "Parce que la loi européenne l’impose",
+          "Surtout par inertie et habitude de laboratoire depuis les années 70"
+        ],
+        answer: 2,
+        info: "Comme l’a souligné Roland Cash lors du webinaire, les freins sont avant tout culturels, économiques et liés aux habitudes de publication."
+      },
+      {
+        q: "Quel projet controversé du CNRS près de Marseille a poussé 170 scientifiques à signer une tribune ?",
+        opts: [
+          "La fermeture d’un laboratoire sur les souris",
+          "Tripler la capacité d’un élevage de primates (de 600 à 1 800 individus)",
+          "L’arrêt des financements sur les méthodes alternatives"
+        ],
+        answer: 1,
+        info: "Alors que l’objectif européen est le remplacement total, ce projet d’extension va à contre-courant de la transition vers la recherche sans animaux."
+      }
+    ];
+
+    let idx = 0, score = 0;
+    const qEl = document.getElementById("question");
+    const optEl = document.getElementById("options");
+    const fbEl = document.getElementById("feedback");
+    const nextBtn = document.getElementById("nextBtn");
+    const counterEl = document.getElementById("counter");
+    const progEl = document.getElementById("progress");
+
+    function render() {
+      const item = questions[idx];
+      counterEl.textContent = `Question ${idx + 1} / ${questions.length}`;
+      progEl.style.width = `${((idx + 1) / questions.length) * 100}%`;
+      qEl.textContent = item.q;
+      optEl.innerHTML = "";
+      fbEl.className = "feedback";
+      nextBtn.className = "next-btn";
+      nextBtn.textContent = idx === questions.length - 1 ? "Voir mon résultat →" : "Question suivante →";
+
+      item.opts.forEach((text, i) => {
+        const btn = document.createElement("button");
+        btn.className = "opt";
+        btn.textContent = text;
+        btn.onclick = () => select(i, btn);
+        optEl.appendChild(btn);
+      });
+    }
+
+    function select(choice, btn) {
+      const item = questions[idx];
+      const buttons = optEl.querySelectorAll("button");
+      buttons.forEach(b => b.disabled = true);
+
+      if (choice === item.answer) {
+        score++;
+        btn.classList.add("correct");
+      } else {
+        btn.classList.add("wrong");
+        buttons[item.answer].classList.add("correct");
+      }
+      fbEl.textContent = item.info;
+      fbEl.classList.add("show");
+      nextBtn.classList.add("show");
+    }
+
+    nextBtn.onclick = () => {
+      idx++;
+      if (idx < questions.length) render();
+      else showResult();
+    };
+
+    function showResult() {
+      counterEl.textContent = "Terminé";
+      document.getElementById("content").innerHTML = `
+        <div class="result">
+          <div class="score">${score} / ${questions.length}</div>
+          <h2>${score >= 4 ? "Incollable sur le sujet !" : "L’essentiel en 45 secondes"}</h2>
+          <p>En France, les freins à la sortie de l’expérimentation animale sont surtout politiques et culturels. Aidez ARGOS 42 à faire bouger les lignes.</p>
+          <div class="actions">
+            <a class="cta-btn" href="https://argos42.org" target="_top">Soutenir ARGOS 42</a>
+            <button class="restart-btn" onclick="location.reload()">Rejouer</button>
+          </div>
+        </div>
+      `;
+    }
+
+    render();
+  </script>
+</body>
+</html>
