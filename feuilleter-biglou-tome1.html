@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feuilleter un extrait — Les aventures de Biglou Tome 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --caramel: #a4470e;
+      --caramel-dark: #823608;
+      --beige: #e2d6c5;
+      --discret: #f7f4f2;
+      --chocolat: #372612;
+      --chocolat-soft: #6b533b;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: transparent;
+      color: var(--chocolat);
+      padding: 8px;
+    }
+
+    .reader-box {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--discret);
+      border: 2px solid var(--caramel);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(55, 38, 18, 0.08);
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      background: var(--beige);
+      color: var(--caramel);
+      border: 1px solid var(--caramel);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 5px 14px;
+      border-radius: 50px;
+    }
+
+    .page-counter {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--chocolat-soft);
+    }
+
+    h2 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--caramel);
+      margin-bottom: 14px;
+    }
+
+    .stage {
+      position: relative;
+      background: #ffffff;
+      border: 1.5px solid var(--beige);
+      border-radius: 12px;
+      padding: 16px;
+      min-height: 410px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .page-frame {
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 10px 25px rgba(55, 38, 18, 0.18);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .page-frame img {
+      display: block;
+      max-height: 360px;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      pointer-events: none;
+    }
+
+    .page-frame::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 14px;
+      background: linear-gradient(90deg, rgba(55,38,18,0.16), transparent);
+      pointer-events: none;
+    }
+
+    .watermark {
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      background: rgba(55, 38, 18, 0.72);
+      color: #ffffff;
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      border-radius: 50px;
+      pointer-events: none;
+    }
+
+    .caption {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: var(--chocolat-soft);
+      text-align: center;
+      font-style: italic;
+    }
+
+    .end-slide {
+      text-align: center;
+      padding: 20px 14px;
+      display: none;
+    }
+
+    .end-slide h3 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.7rem;
+      color: var(--caramel);
+      margin-bottom: 10px;
+    }
+
+    .end-slide p {
+      font-size: 0.95rem;
+      color: var(--chocolat);
+      max-width: 480px;
+      margin: 0 auto 18px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn-pill {
+      cursor: pointer;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 11px 22px;
+      background: var(--caramel);
+      color: #ffffff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s, opacity 0.2s;
+    }
+
+    .btn-pill:hover:not(:disabled) { background: var(--caramel-dark); }
+    .btn-pill:disabled { opacity: 0.35; cursor: default; }
+
+    .btn-outline {
+      background: var(--beige);
+      color: var(--chocolat);
+      border: 1.5px solid var(--caramel);
+    }
+    .btn-outline:hover:not(:disabled) { background: #d6c6b0; }
+
+    .dots {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--beige);
+      border: 1px solid var(--caramel);
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .dot.active {
+      background: var(--caramel);
+      transform: scale(1.25);
+    }
+
+    @media (max-width: 540px) {
+      .reader-box { padding: 16px; }
+      h2 { font-size: 1.45rem; }
+      .page-frame img { max-height: 290px; }
+      .btn-pill { padding: 10px 16px; font-size: 0.86rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="reader-box">
+  <div class="header-row">
+    <span class="badge">📖 Feuilleter un extrait</span>
+    <span class="page-counter" id="pageCounter">Couverture</span>
+  </div>
+  <h2>Les aventures de Biglou — Tome 1</h2>
+
+  <div class="stage" id="stage">
+    <div class="page-frame" id="pageFrame">
+      <img id="pageImg" src="" alt="Extrait du livre Biglou Tome 1" />
+      <span class="watermark">Extrait • © Argos 42</span>
+    </div>
+    <p class="caption" id="pageCaption"></p>
+
+    <div class="end-slide" id="endSlide">
+      <h3>Envie de découvrir la suite des aventures de Biglou ?</h3>
+      <p>Chaque exemplaire acheté (8 €) offre un repas à un chien d’une personne en situation de précarité via <strong>Gamelles Pleines Lyon</strong> et soutient les actions d’<strong>Argos 42</strong>.</p>
+      <a href="https://argos42.org/produit/livre-jeunesse-solidaire-biglou-tome-1/" target="_top" class="btn-pill">🐾 Commander le livre solidaire</a>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button type="button" class="btn-pill btn-outline" id="prevBtn">← Précédent</button>
+    <div class="dots" id="dotsBox"></div>
+    <button type="button" class="btn-pill" id="nextBtn">Suivant →</button>
+  </div>
+</div>
+
+<script>
+  const slides = [
+    {
+      type: "image",
+      src: "https://argos42.org/wp-content/uploads/2026/11/feuilleter-livre-biglou-1.png",
+      label: "Couverture",
+      caption: "Écrit par Jessica Morel et illustré par Cécilia Adamczak."
+    },
+    {
+      type: "image",
+      src: "https://argos42.org/wp-content/uploads/2026/11/feuilleter-livre-biglou-2.png",
+      label: "Extrait 1 / 3",
+      caption: "Faites connaissance avec Biglou, un beagle plein d'humour et de sensibilité."
+    },
+    {
+      type: "image",
+      src: "https://argos42.org/wp-content/uploads/2026/11/feuilleter-livre-biglou-3.png",
+      label: "Extrait 2 / 3",
+      caption: "Des illustrations colorées pour comprendre le monde à hauteur de truffe."
+    },
+    {
+      type: "image",
+      src: "https://argos42.org/wp-content/uploads/2026/11/feuilleter-livre-biglou-4.png",
+      label: "Extrait 3 / 3",
+      caption: "Apprendre les bons gestes pour respecter les besoins de nos compagnons."
+    },
+    {
+      type: "image",
+      src: "https://argos42.org/wp-content/uploads/2026/11/feuilleter-livre-biglou-5.png",
+      label: "Quatrième de couverture",
+      caption: "Un livre jeunesse solidaire au profit d'Argos 42 et Gamelles Pleines Lyon."
+    },
+    {
+      type: "cta",
+      label: "Découvrir le livre"
+    }
+  ];
+
+  let idx = 0;
+  let touchStartX = 0;
+
+  const pageCounter = document.getElementById("pageCounter");
+  const pageFrame = document.getElementById("pageFrame");
+  const pageImg = document.getElementById("pageImg");
+  const pageCaption = document.getElementById("pageCaption");
+  const endSlide = document.getElementById("endSlide");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const dotsBox = document.getElementById("dotsBox");
+  const stage = document.getElementById("stage");
+
+  function renderDots() {
+    dotsBox.innerHTML = "";
+    slides.forEach((_, i) => {
+      const d = document.createElement("span");
+      d.className = "dot" + (i === idx ? " active" : "");
+      d.onclick = () => { idx = i; render(); };
+      dotsBox.appendChild(d);
+    });
+  }
+
+  function render() {
+    const item = slides[idx];
+    pageCounter.textContent = item.label;
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === slides.length - 1;
+
+    if (item.type === "image") {
+      endSlide.style.display = "none";
+      pageFrame.style.display = "inline-block";
+      pageCaption.style.display = "block";
+      pageImg.src = item.src;
+      pageCaption.textContent = item.caption;
+    } else {
+      pageFrame.style.display = "none";
+      pageCaption.style.display = "none";
+      endSlide.style.display = "block";
+    }
+
+    renderDots();
+  }
+
+  prevBtn.onclick = () => { if (idx > 0) { idx--; render(); } };
+  nextBtn.onclick = () => { if (idx < slides.length - 1) { idx++; render(); } };
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft" && idx > 0) { idx--; render(); }
+    if (e.key === "ArrowRight" && idx < slides.length - 1) { idx++; render(); }
+  });
+
+  stage.addEventListener("touchstart", (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  stage.addEventListener("touchend", (e) => {
+    const diff = touchStartX - e.changedTouches[0].screenX;
+    if (diff > 40 && idx < slides.length - 1) { idx++; render(); }
+    if (diff < -40 && idx > 0) { idx--; render(); }
+  }, { passive: true });
+
+  render();
+</script>
+</body>
+</html>
