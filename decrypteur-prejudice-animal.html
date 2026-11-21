@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Décryptage juridique : Le préjudice animal — ARGOS 42</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --caramel: #a4470e;
+      --caramel-dark: #823608;
+      --vermillon: #e5622e;
+      --beige: #e2d6c5;
+      --discret: #f7f4f2;
+      --chocolat: #372612;
+      --chocolat-soft: #6b533b;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: transparent;
+      color: var(--chocolat);
+      padding: 8px;
+    }
+
+    .law-box {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--discret);
+      border: 2px solid var(--caramel);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(55, 38, 18, 0.08);
+    }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      background: var(--beige);
+      color: var(--caramel);
+      border: 1px solid var(--caramel);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 12px;
+      border-radius: 50px;
+    }
+
+    .ref-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--chocolat-soft);
+    }
+
+    h2 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--caramel);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.92rem;
+      color: var(--chocolat-soft);
+      margin-bottom: 16px;
+    }
+
+    /* Onglets de navigation */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      cursor: pointer;
+      border: 1.5px solid var(--caramel);
+      background: #ffffff;
+      color: var(--chocolat);
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 8px 15px;
+      border-radius: 50px;
+      transition: all 0.15s;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--caramel);
+      color: #ffffff;
+    }
+
+    .panel {
+      background: #ffffff;
+      border: 1.5px solid var(--beige);
+      border-radius: 12px;
+      padding: 18px;
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    /* Onglet 1 : Raisonnement en 3 temps */
+    .steps-flow {
+      display: grid;
+      gap: 10px;
+    }
+
+    .step-item {
+      border: 1.5px solid var(--beige);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: var(--discret);
+    }
+
+    .step-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--caramel);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--chocolat);
+    }
+
+    .step-law {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--caramel);
+      background: var(--beige);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--chocolat-soft);
+      line-height: 1.45;
+    }
+
+    /* Onglet 2 : Pénal vs Civil */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .split-col {
+      background: var(--discret);
+      border: 1.5px solid var(--beige);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .split-col h3 {
+      font-size: 0.95rem;
+      color: var(--caramel);
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--beige);
+      padding-bottom: 6px;
+    }
+
+    .split-col ul {
+      padding-left: 16px;
+      font-size: 0.86rem;
+      color: var(--chocolat);
+      line-height: 1.5;
+    }
+
+    .split-col li { margin-bottom: 6px; }
+
+    .amount-highlight {
+      margin-top: 10px;
+      background: #ffffff;
+      border-left: 3px solid var(--caramel);
+      padding: 8px 10px;
+      font-size: 0.83rem;
+    }
+
+    /* Onglet 3 : Frise chronologique */
+    .timeline {
+      border-left: 3px solid var(--caramel);
+      margin-left: 10px;
+      padding-left: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .tl-item {
+      position: relative;
+    }
+
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -23px;
+      top: 4px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--caramel);
+      border: 2px solid #ffffff;
+    }
+
+    .tl-date {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--caramel);
+      text-transform: uppercase;
+    }
+
+    .tl-place {
+      font-weight: 700;
+      font-size: 0.93rem;
+      color: var(--chocolat);
+    }
+
+    .tl-note {
+      font-size: 0.85rem;
+      color: var(--chocolat-soft);
+    }
+
+    @media (max-width: 560px) {
+      .law-box { padding: 16px; }
+      h2 { font-size: 1.45rem; }
+      .split-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="law-box">
+  <div class="top-meta">
+    <span class="badge">⚖️ Décryptage juridique</span>
+    <span class="ref-tag">TJ Vienne, 25 juin 2026 (n° 26/00664)</span>
+  </div>
+  <h2>Comprendre le « préjudice animal » en 30 secondes</h2>
+  <p class="subtitle">Pourquoi cette décision change la donne pour les associations, malgré 1 € symbolique d'indemnisation.</p>
+
+  <div class="tabs">
+    <button type="button" class="tab-btn active" onclick="showTab('tab1', this)">1. Le raisonnement en 3 temps</button>
+    <button type="button" class="tab-btn" onclick="showTab('tab2', this)">2. Pénal vs Civil (les sommes)</button>
+    <button type="button" class="tab-btn" onclick="showTab('tab3', this)">3. Les décisions clés</button>
+  </div>
+
+  <!-- Onglet 1 -->
+  <div class="panel active" id="tab1">
+    <div class="steps-flow">
+      <div class="step-item">
+        <div class="step-head">
+          <span class="step-num">1</span>
+          <span class="step-title">L'animal éprouve de la douleur</span>
+        </div>
+        <span class="step-law">Art. 515-14 du Code civil</span>
+        <p class="step-desc">L'animal est un être vivant doué de sensibilité. Même sans personnalité juridique, sa souffrance physique et psychique est réelle.</p>
+      </div>
+
+      <div class="step-item">
+        <div class="step-head">
+          <span class="step-num">2</span>
+          <span class="step-title">Le détenteur a des devoirs légaux</span>
+        </div>
+        <span class="step-law">Art. L. 214-1 du Code rural</span>
+        <p class="step-desc">Tout propriétaire doit respecter les besoins biologiques de l'animal. Manquer à ce devoir constitue une faute civile.</p>
+      </div>
+
+      <div class="step-item">
+        <div class="step-head">
+          <span class="step-num">3</span>
+          <span class="step-title">Toute faute doit être réparée</span>
+        </div>
+        <span class="step-law">Art. 1240 du Code civil</span>
+        <p class="step-desc">Dès lors qu'une faute cause une souffrance à un être sensible, ce préjudice propre à l'animal doit être indemnisé, indépendamment de son statut de bien.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Onglet 2 -->
+  <div class="panel" id="tab2">
+    <div class="split-grid">
+      <div class="split-col">
+        <h3>🔨 Volet Pénal (la sanction)</h3>
+        <ul>
+          <li><strong>Objectif :</strong> punir l'auteur des faits au nom de la société.</li>
+          <li><strong>Peine prononcée :</strong> 120 jours-amende à 12 € (soit 1 440 €) + interdiction définitive de détenir un animal.</li>
+        </ul>
+      </div>
+      <div class="split-col">
+        <h3>⚖️ Volet Civil (la réparation)</h3>
+        <ul>
+          <li><strong>Préjudice moral des associations :</strong> 3 000 € demandés → <strong>750 € accordés</strong> à chacune.</li>
+          <li><strong>Préjudice animal (subi par le chien) :</strong> 10 000 € demandés → <strong>1 € symbolique</strong> accordé.</li>
+        </ul>
+        <div class="amount-highlight">
+          <strong>Prochain combat :</strong> documenter la douleur par expertise vétérinaire pour dépasser l'euro symbolique.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Onglet 3 -->
+  <div class="panel" id="tab3">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">11 janvier 2024</div>
+        <div class="tl-place">Tribunal de Lille</div>
+        <div class="tl-note">Première reconnaissance d'un préjudice purement animalier distinct du préjudice des associations.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">2 mars 2026</div>
+        <div class="tl-place">Tribunal de Pontarlier</div>
+        <div class="tl-note">Confirmation de la réparation du préjudice subi directement par l'animal victime.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">7 mai 2026</div>
+        <div class="tl-place">Tribunal d'Arras</div>
+        <div class="tl-note">Nouvelle décision favorable consolidant cette jurisprudence émergente.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">25 juin 2026</div>
+        <div class="tl-place">Tribunal judiciaire de Vienne</div>
+        <div class="tl-note">Première motivation juridique complète en 3 étapes (Code civil + Code rural) fondant durablement le préjudice animal.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showTab(tabId, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
