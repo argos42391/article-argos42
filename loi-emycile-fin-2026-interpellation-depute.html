@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interpeller mes députés – ARGOS 42</title>
 
-  
   <!-- Typographies officielles de la charte ARGOS 42 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,7 +93,6 @@
       gap: 10px;
     }
 
-    /* Pastilles numérotées en Beige avec chiffre Caramel */
     .step-num {
       background: var(--beige);
       color: var(--caramel);
@@ -130,7 +128,6 @@
       background: #ffffff;
     }
 
-    /* Style boutons pilule conforme au site Argos 42 */
     button, .btn-pill {
       cursor: pointer;
       border: none;
@@ -139,6 +136,11 @@
       font-weight: 700;
       font-size: 0.95rem;
       padding: 12px 24px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       transition: background 0.2s, transform 0.1s;
     }
 
@@ -152,21 +154,8 @@
     }
     .btn-caramel:hover { background: var(--caramel-dark); }
 
-    .btn-vermillon {
-      background: var(--vermillon);
-      color: #ffffff;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 13px 26px;
-      font-size: 1rem;
-    }
-    .btn-vermillon:hover { background: var(--vermillon-dark); }
-
     .btn-outline {
-      background: var( --beige);
+      background: var(--discret);
       color: var(--chocolat);
       border: 1.5px solid var(--caramel);
     }
@@ -190,7 +179,14 @@
     }
     .btn-mini:hover { background: var(--caramel); color: #ffffff; }
 
-    .depute-list { margin-top: 10px; display: grid; gap: 8px; }
+    .depute-list {
+      margin-top: 10px;
+      display: grid;
+      gap: 8px;
+      max-height: 215px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
 
     .depute-card {
       display: flex;
@@ -237,16 +233,6 @@
       color: var(--caramel);
       border: 1px solid var(--caramel);
       white-space: nowrap;
-    }
-
-    .cci-note {
-      font-size: 0.82rem;
-      color: var(--chocolat-soft);
-      background: var(--discret);
-      padding: 10px 14px;
-      border-radius: 8px;
-      margin-top: 12px;
-      border-left: 4px solid var(--vermillon);
     }
 
     .user-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -296,7 +282,7 @@
   <div class="step">
     <div class="step-title"><span class="step-num">1</span> Trouvez vos députés</div>
     <div class="search-row">
-      <input type="text" id="cpInput" maxlength="5" placeholder="Entrez votre code postal " />
+      <input type="text" id="cpInput" maxlength="5" placeholder="Entrez votre code postal" />
       <button type="button" class="btn-caramel" id="searchBtn">Trouver</button>
     </div>
 
@@ -311,7 +297,6 @@
 
     <div id="searchError" class="error-msg" style="display:none;"></div>
     <div id="deputeList" class="depute-list"></div>
-
 
     <p class="fallback-link">
       Besoin de vérifier votre circonscription exacte ? <a href="https://www2.assemblee-nationale.fr/recherche-localisee/carte/FRANCE" target="_blank" rel="noopener">Consulter la carte officielle de l'Assemblée nationale</a>.
@@ -332,7 +317,7 @@
     <div class="step-title"><span class="step-num">3</span> Vérifiez et envoyez le message</div>
     <textarea id="emailBody"></textarea>
     <div class="actions">
-      <a id="mailtoBtn" href="#" class="btn-caramel">✉️ Envoyer via ma messagerie</a>
+      <a id="mailtoBtn" href="#" class="btn-pill btn-caramel">✉️ Envoyer via ma messagerie</a>
       <button type="button" class="btn-outline" id="copyMsgBtn">📋 Copier le message</button>
       <button type="button" class="btn-outline" id="copyEmailBtn" style="display:none;">📧 Copier les adresses</button>
     </div>
@@ -423,37 +408,26 @@ ${name}, ${city}`;
 
   function updateMailto() {
     const selected = getSelectedDeputes();
-    let to = "";
-    let bccList = [ARGOS_BCC];
-
-    if (selected.length === 1) {
-      to = selected[0].email;
-    } else if (selected.length > 1) {
-      to = selected[0].email;
-      const otherDeputesEmails = selected.slice(1).map(d => d.email);
-      bccList = [...otherDeputesEmails, ARGOS_BCC];
-    }
+    // Tous les députés sélectionnés + Argos 42 sont placés en CCI (bcc), aucun en apparent (To)
+    const deputesEmails = selected.map(d => d.email);
+    const bccList = [...deputesEmails, ARGOS_BCC];
 
     const subject = encodeURIComponent(emailSubject);
     const body = encodeURIComponent(emailBody.value);
     const bcc = encodeURIComponent(bccList.join(","));
 
-    mailtoBtn.href = `mailto:${to}?bcc=${bcc}&subject=${subject}&body=${body}`;
-    copyEmailBtn.style.display = selected.length > 0 ? "inline-block" : "none";
+    mailtoBtn.href = `mailto:?bcc=${bcc}&subject=${subject}&body=${body}`;
+    copyEmailBtn.style.display = selected.length > 0 ? "inline-flex" : "none";
   }
 
   function renderDeputes() {
-    const selectedList = getSelectedDeputes();
     deputeList.innerHTML = "";
 
     currentDeputes.forEach((dep) => {
       const card = document.createElement("div");
       card.className = "depute-card" + (dep.selected ? " selected" : "");
 
-      let roleText = "Non inclus";
-      if (dep.selected) {
-        roleText = (selectedList[0] === dep) ? "Destinataire" : "En CCI";
-      }
+      const roleText = dep.selected ? "En CCI" : "Non inclus";
 
       card.innerHTML = `
         <div class="depute-left">
@@ -486,7 +460,7 @@ ${name}, ${city}`;
     const allSelected = currentDeputes.every(d => d.selected);
     toggleAllBtn.textContent = allSelected ? "Tout décocher" : "Tout sélectionner";
     const count = getSelectedDeputes().length;
-    searchStatus.textContent = `${count} député${count > 1 ? "s" : ""} sélectionné${count > 1 ? "s" : ""}  :`;
+    searchStatus.textContent = `${count} député${count > 1 ? "s" : ""} sélectionné${count > 1 ? "s" : ""} (en CCI) :`;
   }
 
   toggleAllBtn.addEventListener("click", () => {
@@ -591,6 +565,5 @@ ${name}, ${city}`;
 
   buildMessage();
 </script>
-
 </body>
 </html>
