@@ -3,248 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Le Défi de Biglou – Quiz Respect des Animaux</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --caramel: #a4470e;
-      --caramel-dark: #823608;
-      --vermillon: #e5622e;
-      --beige: #e2d6c5;
-      --discret: #f7f4f2;
-      --chocolat: #372612;
-      --chocolat-soft: #6b533b;
-      --ok-bg: #e8f5e9;
-      --ok-border: #2e7d32;
-      --ko-bg: #ffebee;
-      --ko-border: #c62828;
-      --radius: 16px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: transparent;
-      color: var(--chocolat);
-      line-height: 1.5;
-      padding: 8px;
-    }
-
-    .quiz-box {
-      max-width: 720px;
-      margin: 0 auto;
-      background: var(--discret);
-      border: 2px solid var(--caramel);
-      border-radius: var(--radius);
-      padding: 26px;
-      box-shadow: 0 6px 20px rgba(55, 38, 18, 0.08);
-    }
-
-    .header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .badge {
-      display: inline-block;
-      background: var(--beige);
-      color: var(--caramel);
-      border: 1px solid var(--caramel);
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 5px 14px;
-      border-radius: 50px;
-    }
-
-    .progress-text {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--chocolat-soft);
-    }
-
-    h2 {
-      font-family: 'Kaushan Script', cursive;
-      font-size: 1.8rem;
-      font-weight: 400;
-      color: var(--caramel);
-      line-height: 1.2;
-      margin-bottom: 6px;
-    }
-
-    .subtitle {
-      font-size: 0.94rem;
-      color: var(--chocolat-soft);
-      margin-bottom: 18px;
-    }
-
-    .card {
-      background: #ffffff;
-      border: 1.5px solid var(--beige);
-      border-radius: 12px;
-      padding: 20px;
-    }
-
-    .q-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .q-emoji {
-      font-size: 2rem;
-      background: var(--beige);
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      border: 1.5px solid var(--caramel);
-    }
-
-    .q-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--chocolat);
-    }
-
-    .options {
-      display: grid;
-      gap: 10px;
-    }
-
-    .opt-btn {
-      width: 100%;
-      text-align: left;
-      background: var(--discret);
-      color: var(--chocolat);
-      border: 1.5px solid var(--beige);
-      border-radius: 12px;
-      padding: 13px 16px;
-      font-family: 'Roboto', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .opt-btn:hover:not(:disabled) {
-      border-color: var(--caramel);
-      background: #f5ebe0;
-    }
-
-    .opt-btn:disabled { cursor: default; }
-
-    .opt-btn.correct {
-      background: var(--ok-bg);
-      border-color: var(--ok-border);
-      color: #1b5e20;
-      font-weight: 700;
-    }
-
-    .opt-btn.wrong {
-      background: var(--ko-bg);
-      border-color: var(--ko-border);
-      color: #b71c1c;
-    }
-
-    .feedback {
-      margin-top: 14px;
-      padding: 12px 15px;
-      border-radius: 10px;
-      font-size: 0.92rem;
-      background: var(--discret);
-      border-left: 4px solid var(--caramel);
-      display: none;
-    }
-
-    .nav-row {
-      margin-top: 16px;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .btn-pill {
-      cursor: pointer;
-      border: none;
-      border-radius: 50px;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      padding: 12px 26px;
-      background: var(--caramel);
-      color: #ffffff;
-      transition: background 0.2s;
-    }
-
-    .btn-pill:hover { background: var(--caramel-dark); }
-
-    .result-box {
-      text-align: center;
-      padding: 12px 6px;
-      display: none;
-    }
-
-    .score-circle {
-      width: 84px;
-      height: 84px;
-      border-radius: 50%;
-      background: var(--beige);
-      border: 2px solid var(--caramel);
-      color: var(--caramel);
-      font-size: 1.5rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 14px;
-    }
-
-    .result-title {
-      font-family: 'Kaushan Script', cursive;
-      font-size: 1.7rem;
-      color: var(--caramel);
-      margin-bottom: 8px;
-    }
-
-    .result-desc {
-      font-size: 0.95rem;
-      color: var(--chocolat);
-      max-width: 540px;
-      margin: 0 auto 18px;
-    }
-
-    @media (max-width: 540px) {
-      .quiz-box { padding: 18px; }
-      h2 { font-size: 1.5rem; }
-      .q-emoji { width: 44px; height: 44px; font-size: 1.6rem; }
-    }
-  </style>
+  <title>Le Défi de Biglou – Quiz Chiens &amp; Chats</title>
+  <link rel="stylesheet" href="argos-quiz.css" />
 </head>
 <body>
 
 <div class="quiz-box">
   <div class="header-row">
-    <span class="badge">Jeu parents &amp; enfants • Avec Biglou</span>
+    <span class="badge">Jeu parents &amp; enfants • Chiens &amp; Chats</span>
     <span class="progress-text" id="progressText">Question 1 / 5</span>
   </div>
-  <h2>Sais-tu décoder le langage des animaux ?</h2>
-  <p class="subtitle">Teste tes réflexes en famille en 5 situations concrètes pour devenir un vrai protecteur des animaux !</p>
+  <h2>Sais-tu décoder les chiens et les chats ?</h2>
+  <p class="subtitle">Teste tes réflexes en famille en 5 situations concrètes avec Biglou pour devenir un vrai protecteur des animaux !</p>
 
   <div class="card" id="questionCard">
     <div class="q-header">
-      <div class="q-emoji" id="qEmoji">🐕</div>
+      <div class="q-emoji" id="qEmoji">🐶</div>
       <div class="q-title" id="qTitle"></div>
     </div>
     <div class="options" id="optionsBox"></div>
@@ -256,7 +30,7 @@
 
   <div class="card result-box" id="resultBox">
     <div class="score-circle" id="scoreCircle">5/5</div>
-    <div class="result-title" id="resultTitle">Bravo, Super Protecteur !</div>
+    <div class="result-title" id="resultTitle">Champion des chiens et des chats !</div>
     <p class="result-desc" id="resultDesc"></p>
     <button type="button" class="btn-pill" id="restartBtn">↻ Rejouer le quiz</button>
   </div>
@@ -276,6 +50,17 @@
       explanation: "Exact ! Détourner la tête, bâiller ou se lécher les babines sont des signaux d'apaisement : le chien exprime son inconfort bien avant de grogner."
     },
     {
+      emoji: "🐱",
+      question: "Un chat remue vivement le bout de sa queue, couche les oreilles en arrière et se fige. Comment se sent-il ?",
+      options: [
+        "Il est très agacé ou stressé : il faut le laisser tranquille",
+        "Il est super content comme un chien qui remue la queue",
+        "Il réclame un gros câlin dans les bras"
+      ],
+      correct: 0,
+      explanation: "Bravo ! Contrairement au chien, un chat qui fouette l'air avec sa queue et couche ses oreilles montre qu'il est irrité et risque de griffer si on insiste."
+    },
+    {
       emoji: "🦮",
       question: "Dans la rue, tu croises un chien super mignon tenu en laisse. Quel est le premier réflexe ?",
       options: [
@@ -287,37 +72,26 @@
       explanation: "Toujours demander l'accord du propriétaire avant d'approcher, sans courir ni fixer le chien dans les yeux."
     },
     {
-      emoji: "🐱",
-      question: "Le chat dort profondément dans son panier ou sur l'arbre à chat. Que dois-tu faire ?",
+      emoji: "💤",
+      question: "Le chat dort profondément sur l'arbre à chat ou le chien mange dans sa gamelle. Que dois-tu faire ?",
       options: [
-        "Le laisser tranquille : c'est sa zone de refuge",
-        "Le réveiller doucement pour qu'il vienne jouer",
-        "Le porter dans tes bras pour l'installer sur le canapé"
+        "Les laisser tranquilles : ce sont leurs moments et zones de refuge",
+        "Venir les caresser doucement pour leur montrer que tu les aimes",
+        "Soulever leur gamelle ou les réveiller pour jouer"
       ],
       correct: 0,
-      explanation: "Un animal qui dort ou qui se trouve dans son espace de refuge ne doit jamais être dérangé : il pourrait réagir par surprise ou par peur."
+      explanation: "Un chien ou un chat qui mange ou qui dort dans son espace de refuge ne doit jamais être dérangé : il pourrait réagir par surprise ou par défense."
     },
     {
-      emoji: "🦆",
-      question: "Au parc, tu vois des canards au bord de l'étang. Est-ce une bonne idée de leur donner du pain ?",
+      emoji: "🤚",
+      question: "Un chat se roule sur le dos devant toi ou un chien s'approche pour te dire bonjour. Où vaut-il mieux les caresser ?",
       options: [
-        "Oui, les canards adorent le pain sec",
-        "Non, le pain est mauvais pour leur santé et il ne faut pas nourrir les animaux sauvages",
-        "Oui, mais uniquement de la brioche"
+        "En tapotant fort sur le dessus de leur tête",
+        "Doucement avec le plat de la main sous le menton, sur le poitrail ou le côté",
+        "En leur attrapant le ventre ou les pattes à deux mains"
       ],
       correct: 1,
-      explanation: "Bravo ! Donner du pain aux canards ou nourrir la faune sauvage nuit gravement à leur santé. On les observe simplement de loin."
-    },
-    {
-      emoji: "🐣",
-      question: "En balade, tu découvres un oisillon tombé du nid ou un animal sauvage blessé. Que fais-tu ?",
-      options: [
-        "Tu le prends dans tes mains pour le ramener à la maison",
-        "Tu ne le touches pas et tu préviens immédiatement un adulte",
-        "Tu lui donnes de l'eau à la bouteille"
-      ],
-      correct: 1,
-      explanation: "Parfait ! Il ne faut jamais manipuler un animal sauvage en détresse : préviens tout de suite un adulte qui pourra contacter un centre de soins."
+      explanation: "Parfait ! La plupart des chiens et des chats n'aiment pas les mains qui arrivent au-dessus de leur tête ni qu'on leur touche le ventre. Préfère toujours une caresse douce sur le flanc, le poitrail ou sous le menton."
     }
   ];
 
@@ -392,14 +166,14 @@
     scoreCircle.textContent = `${score} / ${questions.length}`;
 
     if (score === questions.length) {
-      resultTitle.textContent = "Champion du respect des animaux !";
-      resultDesc.textContent = "Tu connais tous les bons réflexes pour comprendre les animaux et vivre avec eux en toute sécurité. Biglou est très fier de toi !";
+      resultTitle.textContent = "Champion des chiens et des chats !";
+      resultDesc.textContent = "Tu sais parfaitement décoder les signaux des chiens et des chats pour vivre avec eux en toute sécurité. Biglou est très fier de toi !";
     } else if (score >= 3) {
-      resultTitle.textContent = "Très bon réflexes !";
-      resultDesc.textContent = "Tu as déjà compris l'essentiel pour respecter les animaux. Continue d'observer leurs signaux avec l'aide des aventures de Biglou !";
+      resultTitle.textContent = "Très bons réflexes !";
+      resultDesc.textContent = "Tu as déjà compris l'essentiel pour respecter les chiens et les chats. Continue d'observer leurs signaux avec l'aide des aventures de Biglou !";
     } else {
       resultTitle.textContent = "En route vers de nouveaux réflexes !";
-      resultDesc.textContent = "Relis les conseils de l'article avec un adulte et découvre les aventures de Biglou le Beagle pour devenir incollable sur les animaux.";
+      resultDesc.textContent = "Relis les conseils de l'article avec un adulte et découvre les aventures de Biglou le Beagle pour devenir incollable sur les chiens et les chats.";
     }
   }
 
