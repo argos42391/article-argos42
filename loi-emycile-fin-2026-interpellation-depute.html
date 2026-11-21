@@ -3,27 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interpeller mon député – ARGOS 42</title>
+  <title>Interpeller mes députés – ARGOS 42</title>
+  <!-- Typographies officielles de la charte ARGOS 42 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #a44700;
-      --primary-hover: #a44700;
-      --accent: #e5622e;
-      --accent-hover:#e5622e;
-      --bg: #f7f4f2;
-      --card: #fffcf0;
-      --text: #372612;
-      --muted: #e2d6c5;
-      --border: #e2d6c5;
-      --radius: 12px;
+      --caramel: #a4470e;        /* Caramel principal (Vesuvius) */
+      --caramel-dark: #823608;
+      --vermillon: #e5622e;      /* Orange Vermillon */
+      --vermillon-dark: #c94e1e;
+      --beige: #e2d6c5;          /* Beige - Fond principal (Bone) */
+      --discret: #f7f4f2;        /* Fond discret */
+      --vanille: #fffcf0;        /* Vanille */
+      --chocolat: #372612;       /* Chocolat */
+      --chocolat-soft: #6b533b;
+      --radius: 16px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
       background-color: transparent;
-      color: var(--text);
+      color: var(--chocolat);
       line-height: 1.5;
       padding: 8px;
     }
@@ -31,55 +35,75 @@
     .widget-box {
       max-width: 720px;
       margin: 0 auto;
-      background: var(--card);
-      border: 2px solid var(--primary);
+      background: var(--beige);
+      border: 2px solid var(--caramel);
       border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      padding: 28px;
+      box-shadow: 0 6px 20px rgba(55, 38, 18, 0.1);
     }
 
     .badge {
       display: inline-block;
-      background:#f7f4f2;
-      color: var(--primary);
+      background: var(--vanille);
+      color: var(--caramel);
+      border: 1px solid var(--caramel);
       font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      padding: 4px 10px;
-      border-radius: 20px;
-      margin-bottom: 10px;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 12px;
     }
 
-    h2 { font-size: 1.35rem; color: var(--primary); margin-bottom: 6px; }
-    .subtitle { font-size: 0.95rem; color: var(--muted); margin-bottom: 20px; }
+    h2 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.85rem;
+      font-weight: 400;
+      color: var(--caramel);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 0.96rem;
+      color: var(--chocolat);
+      margin-bottom: 22px;
+    }
 
     .step {
-      margin-bottom: 20px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid #f7f4f2;
+      background: var(--vanille);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(164, 71, 14, 0.18);
     }
-    .step:last-of-type { border-bottom: none; margin-bottom: 10px; padding-bottom: 0; }
+
+    .step:last-of-type {
+      margin-bottom: 4px;
+    }
 
     .step-title {
       font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 10px;
+      font-size: 1.02rem;
+      color: var(--chocolat);
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .step-num {
-      background: var(--primary);
-      color: #fff;
-      width: 24px;
-      height: 24px;
+      background: var(--caramel);
+      color: var(--vanille);
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
+      font-weight: 700;
       flex-shrink: 0;
     }
 
@@ -88,126 +112,209 @@
     input[type="text"], select {
       flex: 1;
       min-width: 180px;
-      padding: 11px 14px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      padding: 12px 16px;
+      border: 1.5px solid var(--beige);
+      border-radius: 10px;
+      font-family: 'Roboto', sans-serif;
       font-size: 0.95rem;
-      background: #fff;
+      color: var(--chocolat);
+      background: var(--discret);
     }
 
-    input[type="text"]:focus, select:focus { outline: none; border-color: var(--primary); }
+    input[type="text"]:focus, select:focus {
+      outline: none;
+      border-color: var(--caramel);
+      background: #ffffff;
+    }
 
-    button {
+    /* Style boutons pilule conforme au site Argos 42 */
+    button, .btn-pill {
       cursor: pointer;
       border: none;
-      border-radius: 8px;
-      font-weight: 600;
+      border-radius: 50px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
       font-size: 0.95rem;
-      padding: 11px 18px;
-      transition: background 0.2s;
+      padding: 12px 24px;
+      transition: background 0.2s, transform 0.1s;
     }
 
-    .btn-primary { background: var(--primary); color: #fff; }
-    .btn-primary:hover { background: var(--primary-hover); }
+    button:active, .btn-pill:active {
+      transform: scale(0.98);
+    }
 
-    .btn-accent {
-      background: var(--accent);
-      color: #fff;
+    .btn-caramel {
+      background: var(--caramel);
+      color: #ffffff;
+    }
+    .btn-caramel:hover { background: var(--caramel-dark); }
+
+    .btn-vermillon {
+      background: var(--vermillon);
+      color: #ffffff;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 13px 20px;
-      border-radius: 8px;
-      font-weight: 700;
+      padding: 13px 26px;
       font-size: 1rem;
     }
-    .btn-accent:hover { background: var(--accent-hover); }
+    .btn-vermillon:hover { background: var(--vermillon-dark); }
 
-    .btn-secondary {
-      background: #f3f4f6;
-      color: var(--text);
-      border: 1px solid var(--border);
+    .btn-outline {
+      background: var(--discret);
+      color: var(--chocolat);
+      border: 1.5px solid var(--caramel);
     }
-    .btn-secondary:hover { background: #e5e7eb; }
+    .btn-outline:hover { background: var(--beige); }
 
-    .depute-list { margin-top: 12px; display: grid; gap: 10px; }
+    .depute-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-mini {
+      font-size: 0.82rem;
+      padding: 6px 14px;
+      background: var(--beige);
+      color: var(--chocolat);
+      border-radius: 50px;
+    }
+    .btn-mini:hover { background: var(--caramel); color: #ffffff; }
+
+    .depute-list { margin-top: 10px; display: grid; gap: 8px; }
 
     .depute-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--bg);
+      padding: 12px 14px;
+      border: 1.5px solid var(--beige);
+      border-radius: 10px;
+      background: var(--discret);
       cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
     }
 
-    .depute-card:hover, .depute-card.selected {
-      border-color: var(--primary);
-      background: #edf7f1;
+    .depute-card.selected {
+      border-color: var(--caramel);
+      background: #f5ebe0;
     }
 
-    .depute-name { font-weight: 700; font-size: 0.98rem; }
-    .depute-circo { font-size: 0.83rem; color: var(--muted); }
-    .depute-email { font-size: 0.85rem; color: var(--primary); font-weight: 700; margin-top: 2px; }
+    .depute-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .depute-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--caramel);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .depute-name { font-weight: 700; font-size: 0.96rem; color: var(--chocolat); }
+    .depute-circo { font-size: 0.83rem; color: var(--chocolat-soft); }
+    .depute-email { font-size: 0.84rem; color: var(--caramel); font-weight: 700; margin-top: 2px; }
+
+    .role-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 50px;
+      background: var(--vanille);
+      color: var(--caramel);
+      border: 1px solid var(--caramel);
+      white-space: nowrap;
+    }
+
+    .cci-note {
+      font-size: 0.82rem;
+      color: var(--chocolat-soft);
+      background: var(--discret);
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-top: 12px;
+      border-left: 4px solid var(--vermillon);
+    }
 
     .user-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
     @media (max-width: 540px) {
+      .widget-box { padding: 18px; }
+      h2 { font-size: 1.55rem; }
       .user-grid { grid-template-columns: 1fr; }
       .depute-card { flex-direction: column; align-items: flex-start; }
     }
 
     textarea {
       width: 100%;
-      min-height: 230px;
-      padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: var(--text);
-      background: #fafafa;
+      min-height: 235px;
+      padding: 14px;
+      border: 1.5px solid var(--beige);
+      border-radius: 10px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--chocolat);
+      background: var(--discret);
       resize: vertical;
     }
 
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-    .status-msg { font-size: 0.88rem; margin-top: 8px; color: var(--primary); font-weight: 600; }
-    .error-msg { color: #b91c1c; font-size: 0.88rem; margin-top: 8px; }
-    .fallback-link { font-size: 0.82rem; color: var(--muted); margin-top: 8px; }
-    .fallback-link a { color: var(--primary); }
+    textarea:focus {
+      outline: none;
+      border-color: var(--caramel);
+      background: #ffffff;
+    }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .status-msg { font-size: 0.9rem; margin-top: 10px; color: var(--caramel); font-weight: 700; }
+    .error-msg { color: #b91c1c; font-size: 0.9rem; margin-top: 10px; font-weight: 500; }
+    .fallback-link { font-size: 0.83rem; color: var(--chocolat-soft); margin-top: 10px; }
+    .fallback-link a { color: var(--caramel); font-weight: 700; }
   </style>
 </head>
 <body>
 
 <div class="widget-box">
   <span class="badge">Action citoyenne • Votes les 30 nov. &amp; 1er déc. 2026</span>
-  <h2>Interpellez votre député en 30 secondes</h2>
-  <p class="subtitle">Trouvez automatiquement l'adresse e-mail de votre député et envoyez-lui le message d'ARGOS 42 avant les votes à l'Assemblée nationale.</p>
+  <h2>Interpellez vos députés en 30 secondes</h2>
+  <p class="subtitle">Trouvez automatiquement l'adresse e-mail des députés de votre département et envoyez-leur le message d'Argos 42 avant les votes à l'Assemblée nationale.</p>
 
   <!-- ÉTAPE 1 : RECHERCHE PAR CODE POSTAL -->
   <div class="step">
-    <div class="step-title"><span class="step-num">1</span> Trouvez votre député</div>
+    <div class="step-title"><span class="step-num">1</span> Trouvez vos députés</div>
     <div class="search-row">
       <input type="text" id="cpInput" maxlength="5" placeholder="Entrez votre code postal (ex : 42800)" />
-      <button type="button" class="btn-primary" id="searchBtn">Trouver</button>
+      <button type="button" class="btn-caramel" id="searchBtn">Trouver</button>
     </div>
 
     <div id="communeBox" style="margin-top:10px; display:none;">
       <select id="communeSelect"></select>
     </div>
 
-    <div id="searchStatus" class="status-msg" style="display:none;"></div>
+    <div id="toolbarBox" class="depute-toolbar" style="display:none;">
+      <span id="searchStatus" class="status-msg" style="margin-top:0;"></span>
+      <button type="button" class="btn-mini" id="toggleAllBtn">Tout décocher</button>
+    </div>
+
     <div id="searchError" class="error-msg" style="display:none;"></div>
     <div id="deputeList" class="depute-list"></div>
 
+    <div class="cci-note">
+      <strong>Transparence :</strong> Pour permettre à Argos 42 de comptabiliser les interpellations citoyennes auprès des élus, l'adresse <em>ael+an@association-argos42.com</em> (ainsi que les autres députés sélectionnés) est automatiquement ajoutée en copie cachée (CCI).
+    </div>
+
     <p class="fallback-link">
-      Besoin de vérifier votre circonscription ? <a href="https://www2.assemblee-nationale.fr/recherche-localisee/carte/FRANCE" target="_blank" rel="noopener">Consulter la carte officielle de l'Assemblée nationale</a>.
+      Besoin de vérifier votre circonscription exacte ? <a href="https://www2.assemblee-nationale.fr/recherche-localisee/carte/FRANCE" target="_blank" rel="noopener">Consulter la carte officielle de l'Assemblée nationale</a>.
     </p>
   </div>
 
@@ -225,9 +332,9 @@
     <div class="step-title"><span class="step-num">3</span> Vérifiez et envoyez le message</div>
     <textarea id="emailBody"></textarea>
     <div class="actions">
-      <a id="mailtoBtn" href="#" class="btn-accent">✉️ Envoyer via ma messagerie</a>
-      <button type="button" class="btn-secondary" id="copyMsgBtn">📋 Copier le message</button>
-      <button type="button" class="btn-secondary" id="copyEmailBtn" style="display:none;">📧 Copier l'adresse e-mail</button>
+      <a id="mailtoBtn" href="#" class="btn-pill btn-vermillon">✉️ Envoyer via ma messagerie</a>
+      <button type="button" class="btn-outline" id="copyMsgBtn">📋 Copier le message</button>
+      <button type="button" class="btn-outline" id="copyEmailBtn" style="display:none;">📧 Copier les adresses</button>
     </div>
     <div id="copyConfirm" class="status-msg" style="display:none;"></div>
   </div>
@@ -238,6 +345,8 @@
   const searchBtn = document.getElementById("searchBtn");
   const communeBox = document.getElementById("communeBox");
   const communeSelect = document.getElementById("communeSelect");
+  const toolbarBox = document.getElementById("toolbarBox");
+  const toggleAllBtn = document.getElementById("toggleAllBtn");
   const searchStatus = document.getElementById("searchStatus");
   const searchError = document.getElementById("searchError");
   const deputeList = document.getElementById("deputeList");
@@ -250,13 +359,11 @@
   const copyEmailBtn = document.getElementById("copyEmailBtn");
   const copyConfirm = document.getElementById("copyConfirm");
 
-  let selectedDepute = null;
-
+  const ARGOS_BCC = "ael+an@association-argos42.com";
   const emailSubject = "Protection animale : votez pour les propositions de loi n° 3306 et n° 388 (30 nov. & 1er déc.)";
-
-  // API officielle tabulaire de data.gouv.fr (Jeu de données officiel de l'Assemblée nationale - Députés actifs)
-  // Ressource officielle : https://www.data.gouv.fr/fr/datasets/deputes-actifs-de-lassemblee-nationale-informations-et-statistiques/
   const DATA_GOUV_RESOURCE = "092bd7bb-1543-405b-b53c-932ebb49bb8e";
+
+  let currentDeputes = [];
 
   async function fetchDeputesByDept(codeDept) {
     const deptFormatted = String(codeDept).padStart(2, "0");
@@ -277,16 +384,25 @@
     return `${clean(prenom)}.${clean(nom)}@assemblee-nationale.fr`;
   }
 
+  function getSelectedDeputes() {
+    return currentDeputes.filter(d => d.selected && d.email);
+  }
+
   function buildMessage() {
+    const selected = getSelectedDeputes();
     let salutation = "Madame la Députée / Monsieur le Député,";
-    if (selectedDepute) {
-      if (selectedDepute.civ === "Mme") {
-        salutation = `Madame la Députée ${selectedDepute.nom},`;
-      } else if (selectedDepute.civ === "M.") {
-        salutation = `Monsieur le Député ${selectedDepute.nom},`;
+
+    if (selected.length === 1) {
+      const dep = selected[0];
+      if (dep.civ === "Mme") {
+        salutation = `Madame la Députée ${dep.nom},`;
+      } else if (dep.civ === "M.") {
+        salutation = `Monsieur le Député ${dep.nom},`;
       } else {
-        salutation = `Madame la Députée / Monsieur le Député ${selectedDepute.nom},`;
+        salutation = `Madame la Députée / Monsieur le Député ${dep.nom},`;
       }
+    } else if (selected.length > 1) {
+      salutation = "Mesdames et Messieurs les Députés,";
     }
 
     const name = userNameInput.value.trim() || "[Prénom Nom]";
@@ -296,9 +412,9 @@
 
 Les 30 novembre et 1er décembre 2026, l’Assemblée nationale examinera deux propositions de loi essentielles pour la protection animale : la proposition de loi n° 3306 visant à créer un fichier national des personnes ayant l’interdiction de détenir un animal, et la proposition de loi n° 388 visant à interdire la vente de chiens et de chats dans les foires et salons spécialisés.
 
-En tant qu’électeur / électrice de votre circonscription, je vous demande de soutenir ces deux textes et de voter en leur faveur. Je compte également sur vous pour qu’ils puissent être définitivement adoptés avant la suspension des travaux parlementaires, fin février 2027.
+En tant qu’électeur / électrice de votre département, je vous demande de soutenir ces deux textes et de voter en leur faveur. Je compte également sur vous pour qu’ils puissent être définitivement adoptés avant la suspension des travaux parlementaires, fin février 2027.
 
-Je vous remercie de l’attention que vous porterez à ma demande et vous prie d’agréer, Madame la Députée / Monsieur le Député, l’expression de mes salutations distinguées.
+Je vous remercie de l’attention que vous porterez à ma demande et vous prie d’agréer, ${selected.length > 1 ? "Mesdames et Messieurs les Députés" : "Madame la Députée / Monsieur le Député"}, l’expression de mes salutations distinguées.
 
 ${name}, ${city}`;
 
@@ -306,15 +422,80 @@ ${name}, ${city}`;
   }
 
   function updateMailto() {
-    const to = selectedDepute && selectedDepute.email ? selectedDepute.email : "";
-    mailtoBtn.href = `mailto:${to}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody.value)}`;
+    const selected = getSelectedDeputes();
+    let to = "";
+    let bccList = [ARGOS_BCC];
+
+    if (selected.length === 1) {
+      to = selected[0].email;
+    } else if (selected.length > 1) {
+      to = selected[0].email;
+      const otherDeputesEmails = selected.slice(1).map(d => d.email);
+      bccList = [...otherDeputesEmails, ARGOS_BCC];
+    }
+
+    const subject = encodeURIComponent(emailSubject);
+    const body = encodeURIComponent(emailBody.value);
+    const bcc = encodeURIComponent(bccList.join(","));
+
+    mailtoBtn.href = `mailto:${to}?bcc=${bcc}&subject=${subject}&body=${body}`;
+    copyEmailBtn.style.display = selected.length > 0 ? "inline-block" : "none";
   }
 
-  function selectDepute(dep) {
-    selectedDepute = dep;
-    copyEmailBtn.style.display = dep.email ? "inline-block" : "none";
-    buildMessage();
+  function renderDeputes() {
+    const selectedList = getSelectedDeputes();
+    deputeList.innerHTML = "";
+
+    currentDeputes.forEach((dep) => {
+      const card = document.createElement("div");
+      card.className = "depute-card" + (dep.selected ? " selected" : "");
+
+      let roleText = "Non inclus";
+      if (dep.selected) {
+        roleText = (selectedList[0] === dep) ? "Destinataire" : "En CCI";
+      }
+
+      card.innerHTML = `
+        <div class="depute-left">
+          <input type="checkbox" class="depute-checkbox" ${dep.selected ? "checked" : ""} aria-label="Sélectionner ${dep.nom}" />
+          <div>
+            <div class="depute-name">${dep.civ || ""} ${dep.nom} ${dep.groupe ? "(" + dep.groupe + ")" : ""}</div>
+            <div class="depute-circo">${dep.circoLabel}</div>
+            <div class="depute-email">${dep.email}</div>
+          </div>
+        </div>
+        <span class="role-tag">${roleText}</span>
+      `;
+
+      card.addEventListener("click", (e) => {
+        if (e.target.tagName !== "INPUT") {
+          dep.selected = !dep.selected;
+        } else {
+          dep.selected = e.target.checked;
+        }
+        updateToggleBtn();
+        renderDeputes();
+        buildMessage();
+      });
+
+      deputeList.appendChild(card);
+    });
   }
+
+  function updateToggleBtn() {
+    const allSelected = currentDeputes.every(d => d.selected);
+    toggleAllBtn.textContent = allSelected ? "Tout décocher" : "Tout sélectionner";
+    const count = getSelectedDeputes().length;
+    searchStatus.textContent = `${count} député${count > 1 ? "s" : ""} sélectionné${count > 1 ? "s" : ""} (+ Argos 42 en CCI) :`;
+  }
+
+  toggleAllBtn.addEventListener("click", () => {
+    const allSelected = currentDeputes.every(d => d.selected);
+    currentDeputes.forEach(d => d.selected = !allSelected);
+    updateToggleBtn();
+    renderDeputes();
+    buildMessage();
+  });
 
   async function searchByPostalCode() {
     const cp = cpInput.value.trim();
@@ -326,17 +507,14 @@ ${name}, ${city}`;
 
     searchError.style.display = "none";
     communeBox.style.display = "none";
+    toolbarBox.style.display = "none";
     deputeList.innerHTML = "";
-    searchStatus.style.display = "block";
-    searchStatus.textContent = "Recherche de votre commune et des députés du département...";
 
     try {
-      // 1. API officielle de l'État français (geo.api.gouv.fr)
       const geoRes = await fetch(`https://geo.api.gouv.fr/communes?codePostal=${cp}&fields=nom,code,codeDepartement`);
       const communes = await geoRes.json();
 
       if (!communes || communes.length === 0) {
-        searchStatus.style.display = "none";
         searchError.style.display = "block";
         searchError.textContent = "Aucune commune trouvée pour ce code postal.";
         return;
@@ -355,49 +533,31 @@ ${name}, ${city}`;
       }
 
       const codeDept = communes[0].codeDepartement;
-
-      // 2. API officielle data.gouv.fr (Députés actifs de l'Assemblée nationale)
       const deptDeputes = await fetchDeputesByDept(codeDept);
 
       if (!deptDeputes || deptDeputes.length === 0) {
-        searchStatus.style.display = "none";
         searchError.style.display = "block";
         searchError.textContent = "Aucun député trouvé pour ce département. Utilisez le lien officiel ci-dessous.";
         return;
       }
 
-      searchStatus.textContent = `Sélectionnez le député de votre circonscription (Département ${codeDept}) :`;
+      currentDeputes = deptDeputes
+        .sort((a, b) => Number(a.circo) - Number(b.circo))
+        .map(d => ({
+          civ: d.civ,
+          nom: `${d.prenom} ${d.nom}`,
+          groupe: d.groupeAbrev || "",
+          circoLabel: `${d.departementNom || "Département " + codeDept} – ${d.circo}e circonscription`,
+          email: d.mail || formatEmailAN(d.prenom, d.nom),
+          selected: true
+        }));
 
-      deptDeputes.sort((a, b) => Number(a.circo) - Number(b.circo)).forEach((d, idx) => {
-        const email = d.mail || formatEmailAN(d.prenom, d.nom);
-        const fullName = `${d.prenom} ${d.nom}`;
-
-        const card = document.createElement("div");
-        card.className = "depute-card" + (idx === 0 ? " selected" : "");
-        card.innerHTML = `
-          <div>
-            <div class="depute-name">${d.civ || ""} ${fullName} ${d.groupeAbrev ? "(" + d.groupeAbrev + ")" : ""}</div>
-            <div class="depute-circo">${d.departementNom || "Département " + codeDept} – ${d.circo}e circonscription</div>
-            <div class="depute-email">${email}</div>
-          </div>
-          <span style="font-size:0.82rem; font-weight:700; color:#1b4332;">Choisir</span>
-        `;
-
-        card.addEventListener("click", () => {
-          document.querySelectorAll(".depute-card").forEach(c => c.classList.remove("selected"));
-          card.classList.add("selected");
-          selectDepute({ civ: d.civ, nom: fullName, email: email });
-        });
-
-        deputeList.appendChild(card);
-
-        if (idx === 0) {
-          selectDepute({ civ: d.civ, nom: fullName, email: email });
-        }
-      });
+      toolbarBox.style.display = "flex";
+      updateToggleBtn();
+      renderDeputes();
+      buildMessage();
 
     } catch (e) {
-      searchStatus.style.display = "none";
       searchError.style.display = "block";
       searchError.textContent = "Erreur de connexion temporaire. Vous pouvez copier le message ci-dessous et cliquer sur le lien de l'Assemblée nationale.";
     }
@@ -418,10 +578,12 @@ ${name}, ${city}`;
   });
 
   copyEmailBtn.addEventListener("click", () => {
-    if (selectedDepute && selectedDepute.email) {
-      navigator.clipboard.writeText(selectedDepute.email).then(() => {
+    const selected = getSelectedDeputes();
+    if (selected.length > 0) {
+      const allEmails = [...selected.map(d => d.email), ARGOS_BCC].join(", ");
+      navigator.clipboard.writeText(allEmails).then(() => {
         copyConfirm.style.display = "block";
-        copyConfirm.textContent = `✅ Adresse copiée : ${selectedDepute.email}`;
+        copyConfirm.textContent = "✅ Adresses copiées (députés + CCI Argos 42) !";
         setTimeout(() => { copyConfirm.style.display = "none"; }, 3500);
       });
     }
