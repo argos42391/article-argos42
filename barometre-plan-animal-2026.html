@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baromètre du Plan d'action protection animale — ARGOS 42</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --caramel: #a4470e;
+      --caramel-dark: #823608;
+      --vermillon: #e5622e;
+      --beige: #e2d6c5;
+      --discret: #f7f4f2;
+      --chocolat: #372612;
+      --chocolat-soft: #6b533b;
+      --ok-bg: #e8f5e9;
+      --ok-txt: #1b5e20;
+      --wait-bg: #fff3e0;
+      --wait-txt: #b25000;
+      --ko-bg: #ffebee;
+      --ko-txt: #b71c1c;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: transparent;
+      color: var(--chocolat);
+      padding: 8px;
+    }
+
+    .board-box {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--discret);
+      border: 2px solid var(--caramel);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(55, 38, 18, 0.08);
+    }
+
+    .top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      background: var(--beige);
+      color: var(--caramel);
+      border: 1px solid var(--caramel);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 12px;
+      border-radius: 50px;
+    }
+
+    .date-tag {
+      font-size: 0.82rem;
+      color: var(--chocolat-soft);
+      font-weight: 500;
+    }
+
+    h2 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--caramel);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.92rem;
+      color: var(--chocolat-soft);
+      margin-bottom: 16px;
+    }
+
+    /* Résumé chiffré */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .kpi {
+      background: #ffffff;
+      border: 1.5px solid var(--beige);
+      border-radius: 12px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .kpi-num {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 3px;
+    }
+
+    /* Filtres pilules */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .filter-btn {
+      cursor: pointer;
+      border: 1.5px solid var(--caramel);
+      background: #ffffff;
+      color: var(--chocolat);
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 50px;
+      transition: all 0.15s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--caramel);
+      color: #ffffff;
+    }
+
+    /* Liste des mesures */
+    .items-list {
+      display: grid;
+      gap: 9px;
+      max-height: 330px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .measure-card {
+      background: #ffffff;
+      border: 1.5px solid var(--beige);
+      border-radius: 12px;
+      padding: 12px 15px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .measure-card:hover {
+      border-color: var(--caramel);
+    }
+
+    .measure-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .measure-title {
+      font-weight: 700;
+      font-size: 0.94rem;
+      color: var(--chocolat);
+    }
+
+    .status-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 50px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .st-ok { background: var(--ok-bg); color: var(--ok-txt); }
+    .st-wait { background: var(--wait-bg); color: var(--wait-txt); }
+    .st-ko { background: var(--ko-bg); color: var(--ko-txt); }
+
+    .measure-detail {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--beige);
+      font-size: 0.87rem;
+      color: var(--chocolat-soft);
+      display: none;
+    }
+
+    .measure-card.open .measure-detail {
+      display: block;
+    }
+
+    .argos-action {
+      display: inline-block;
+      margin-top: 5px;
+      color: var(--caramel);
+      font-weight: 700;
+    }
+
+    @media (max-width: 540px) {
+      .board-box { padding: 16px; }
+      h2 { font-size: 1.45rem; }
+      .measure-head { flex-direction: column; align-items: flex-start; gap: 5px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="board-box">
+  <div class="top-meta">
+    <span class="badge">Suivi législatif &amp; réglementaire</span>
+    <span class="date-tag">Mise à jour : novembre 2026</span>
+  </div>
+  <h2>Le baromètre du plan d'action gouvernemental</h2>
+  <p class="subtitle">Annoncé le 28 juillet 2026 avec une échéance au 1er octobre : cliquez sur une mesure pour voir son état réel.</p>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-num" style="color: var(--ok-txt);">1</div>
+      <div class="kpi-label">Tenue</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num" style="color: var(--wait-txt);">1</div>
+      <div class="kpi-label">En cours (loi)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num" style="color: var(--ko-txt);">5</div>
+      <div class="kpi-label">En retard / bloquées</div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <button type="button" class="filter-btn active" data-filter="all">Toutes (7)</button>
+    <button type="button" class="filter-btn" data-filter="ok">✅ Tenue (1)</button>
+    <button type="button" class="filter-btn" data-filter="wait">⏳ En cours (1)</button>
+    <button type="button" class="filter-btn" data-filter="ko">❌ En retard (5)</button>
+  </div>
+
+  <div class="items-list" id="itemsList"></div>
+</div>
+
+<script>
+  const measures = [
+    {
+      title: "1. Sanctions contre la vente de chiens & chats en animalerie",
+      status: "ok",
+      statusLabel: "✅ Décret publié",
+      detail: "Décret entré en vigueur le 5 août 2026 : amende jusqu'à 1 500 € par animal (3 000 € en récidive) et 750 € pour exposition en vitrine.",
+      action: "Vigilance ARGOS 42 : contrôle effectif sur le terrain et extension de l'interdiction aux salons du chiot."
+    },
+    {
+      title: "2. Fichier de vérification des interdictions de détention",
+      status: "wait",
+      statusLabel: "⏳ Examen parlementaire",
+      detail: "Nécessite une loi : proposition de loi déposée le 13 octobre 2026 par la députée Corinne Vignon. Passage en séance prévu début décembre 2026.",
+      action: "Mobilisation ARGOS 42 : soutien à la campagne #UnFichierPourEux et interpellation des députés."
+    },
+    {
+      title: "3. Passage des mauvais traitements en contravention de 5e classe",
+      status: "ko",
+      statusLabel: "❌ Aucun décret paru",
+      detail: "L'amende devait passer de 750 € (4e classe) à 1 500 € (5e classe, 3 000 € en récidive) au 1er octobre. Aucun texte publié à ce jour.",
+      action: "Plaidoyer ARGOS 42 auprès des ministères de l'Intérieur et de la Justice."
+    },
+    {
+      title: "4. Liste positive des NAC autorisés chez les particuliers",
+      status: "ko",
+      statusLabel: "❌ Toujours attendue",
+      detail: "Promise pour la rentrée de septembre 2026 afin d'encadrer la détention d'animaux non domestiques.",
+      action: "Suivi réglementaire en cours par nos équipes juridiques."
+    },
+    {
+      title: "5. Campagne & lutte contre les élevages clandestins en ligne",
+      status: "ko",
+      statusLabel: "❌ Sans calendrier",
+      detail: "Annoncée dans la feuille de route de juillet sans déploiement concret ni moyens dédiés depuis l'échéance d'octobre.",
+      action: "Propositions transmises dès septembre 2025 par ARGOS 42 (référents préfecture, formation des agents)."
+    },
+    {
+      title: "6. Label élevages engagés & sortie des chiens de laboratoire",
+      status: "ko",
+      statusLabel: "❌ Aucune annonce",
+      detail: "Aucune feuille de route ni calendrier précis n'ont été communiqués sur ces deux engagements de l'été.",
+      action: "Veille juridique et plaidoyer pour le développement des méthodes alternatives."
+    },
+    {
+      title: "7. Rappel : décret sur les conditions de vie des chiens de sécurité",
+      status: "ko",
+      statusLabel: "❌ 14 ans de retard",
+      detail: "Prévu par la loi depuis 2012 mais jamais publié malgré les engagements répétés de l'État.",
+      action: "Action en justice : mise en demeure du Premier ministre par ARGOS 42 et recours préparé devant le Conseil d'État."
+    }
+  ];
+
+  const itemsList = document.getElementById("itemsList");
+  const filterBtns = document.querySelectorAll(".filter-btn");
+
+  function render(filter = "all") {
+    itemsList.innerHTML = "";
+    const filtered = filter === "all" ? measures : measures.filter(m => m.status === filter);
+
+    filtered.forEach((m, index) => {
+      const card = document.createElement("div");
+      card.className = "measure-card" + (index === 0 ? " open" : "");
+      const pillClass = m.status === "ok" ? "st-ok" : (m.status === "wait" ? "st-wait" : "st-ko");
+
+      card.innerHTML = `
+        <div class="measure-head">
+          <div class="measure-title">${m.title}</div>
+          <span class="status-pill ${pillClass}">${m.statusLabel}</span>
+        </div>
+        <div class="measure-detail">
+          <p>${m.detail}</p>
+          <span class="argos-action">→ ${m.action}</span>
+        </div>
+      `;
+
+      card.onclick = () => card.classList.toggle("open");
+      itemsList.appendChild(card);
+    });
+  }
+
+  filterBtns.forEach(btn => {
+    btn.onclick = () => {
+      filterBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      render(btn.dataset.filter);
+    };
+  });
+
+  render();
+</script>
+</body>
+</html>
