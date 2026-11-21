@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mémorial des animaux de la Grande Guerre — ARGOS 42</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --caramel: #a4470e;
+      --caramel-dark: #823608;
+      --beige: #e2d6c5;
+      --discret: #f7f4f2;
+      --chocolat: #372612;
+      --chocolat-soft: #6b533b;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: transparent;
+      color: var(--chocolat);
+      padding: 8px;
+    }
+
+    .memorial-box {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--discret);
+      border: 2px solid var(--caramel);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 6px 20px rgba(55, 38, 18, 0.08);
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      background: var(--beige);
+      color: var(--caramel);
+      border: 1px solid var(--caramel);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 12px;
+      border-radius: 50px;
+    }
+
+    .hint {
+      font-size: 0.82rem;
+      color: var(--chocolat-soft);
+      font-weight: 500;
+    }
+
+    h2 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--caramel);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.92rem;
+      color: var(--chocolat-soft);
+      margin-bottom: 18px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .flip-card {
+      background: transparent;
+      height: 225px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.flipped .flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-front, .flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Face avant */
+    .flip-front {
+      background: #ffffff;
+      border: 1.5px solid var(--beige);
+      box-shadow: 0 4px 12px rgba(55, 38, 18, 0.05);
+    }
+
+    .flip-card:hover .flip-front {
+      border-color: var(--caramel);
+    }
+
+    .icon-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--beige);
+      border: 1.5px solid var(--caramel);
+      font-size: 1.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .card-name {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.45rem;
+      color: var(--caramel);
+      line-height: 1.15;
+    }
+
+    .card-role {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--chocolat);
+      margin-top: 4px;
+    }
+
+    .tap-pill {
+      margin-top: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--caramel);
+      background: var(--discret);
+      border: 1px solid var(--beige);
+      padding: 4px 12px;
+      border-radius: 50px;
+    }
+
+    /* Face arrière */
+    .flip-back {
+      background: var(--chocolat);
+      color: #ffffff;
+      border: 2px solid var(--caramel);
+      transform: rotateY(180deg);
+      justify-content: space-between;
+      text-align: left;
+      align-items: flex-start;
+    }
+
+    .back-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--beige);
+      border-bottom: 1px solid rgba(226, 214, 197, 0.25);
+      padding-bottom: 6px;
+      width: 100%;
+    }
+
+    .back-text {
+      font-size: 0.86rem;
+      line-height: 1.45;
+      color: #f7f4f2;
+    }
+
+    .back-stat {
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: var(--caramel);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 50px;
+    }
+
+    @media (max-width: 560px) {
+      .memorial-box { padding: 16px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .flip-card { height: 205px; }
+      h2 { font-size: 1.45rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="memorial-box">
+  <div class="header-row">
+    <span class="badge">🕊️ Devoir de mémoire • 1914 – 1918</span>
+    <span class="hint">Cliquez sur une carte pour la retourner</span>
+  </div>
+  <h2>Ces héros oubliés des tranchées</h2>
+  <p class="subtitle">Découvrez l'histoire de ces animaux mobilisés malgré eux au cœur de la Première Guerre mondiale.</p>
+
+  <div class="cards-grid">
+    <!-- Carte 1 : Vaillant -->
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="icon-circle">🕊️</div>
+          <div class="card-name">Vaillant</div>
+          <div class="card-role">Pigeon voyageur • Fort de Vaux</div>
+          <span class="tap-pill">↻ Retourner la carte</span>
+        </div>
+        <div class="flip-back">
+          <div class="back-title">Vaillant (matricule 787-15)</div>
+          <p class="back-text">Lâché en juin 1916 depuis le fort de Vaux assiégé et enfumé par les gaz, il parvient à transmettre l'ultime message de détresse du commandant Raynal.</p>
+          <span class="back-stat">60 000 pigeons mobilisés en France</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte 2 : Cher Ami -->
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="icon-circle">🪶</div>
+          <div class="card-name">Cher Ami</div>
+          <div class="card-role">Pigeon messager • Argonne</div>
+          <span class="tap-pill">↻ Retourner la carte</span>
+        </div>
+        <div class="flip-back">
+          <div class="back-title">Cher Ami</div>
+          <p class="back-text">Grièvement blessé par balle en plein vol en octobre 1918, il achève sa mission et permet de sauver 194 soldats encerclés. Les soigneurs lui fabriquèrent une prothèse en bois.</p>
+          <span class="back-stat">194 vies humaines sauvées</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte 3 : Rintintin -->
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="icon-circle">🐕</div>
+          <div class="card-name">Rintintin</div>
+          <div class="card-role">Chien de liaison &amp; de secours</div>
+          <span class="tap-pill">↻ Retourner la carte</span>
+        </div>
+        <div class="flip-back">
+          <div class="back-title">Rintintin</div>
+          <p class="back-text">Recueilli dans un chenil bombardé en Lorraine en 1918, ce berger allemand a servi pour le transport de messages, de matériel et de médicaments sous le feu.</p>
+          <span class="back-stat">Environ 200 000 chiens engagés</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte 4 : Chevaux, ânes et mulets -->
+    <div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <div class="icon-circle">🐎</div>
+          <div class="card-name">Les Équidés</div>
+          <div class="card-role">Chevaux, ânes &amp; mulets</div>
+          <span class="tap-pill">↻ Retourner la carte</span>
+        </div>
+        <div class="flip-back">
+          <div class="back-title">Les forçats du front</div>
+          <p class="back-text">Indispensables pour tirer l'artillerie, les munitions et évacuer les blessés dans la boue des tranchées. Soignés puis renvoyés au front, presque aucun n'a survécu.</p>
+          <span class="back-stat">Plus de 11 millions d'équidés mobilisés</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
