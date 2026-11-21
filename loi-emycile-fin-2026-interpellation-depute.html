@@ -296,7 +296,7 @@
   <div class="step">
     <div class="step-title"><span class="step-num">1</span> Trouvez vos députés</div>
     <div class="search-row">
-      <input type="text" id="cpInput" maxlength="5" placeholder="Entrez votre code postal (ex : 42800)" />
+      <input type="text" id="cpInput" maxlength="5" placeholder="Entrez votre code postal " />
       <button type="button" class="btn-caramel" id="searchBtn">Trouver</button>
     </div>
 
@@ -332,7 +332,7 @@
     <div class="step-title"><span class="step-num">3</span> Vérifiez et envoyez le message</div>
     <textarea id="emailBody"></textarea>
     <div class="actions">
-      <a id="mailtoBtn" href="#" class="btn-pill btn-vermillon">✉️ Envoyer via ma messagerie</a>
+      <a id="mailtoBtn" href="#" class="btn-caramel">✉️ Envoyer via ma messagerie</a>
       <button type="button" class="btn-outline" id="copyMsgBtn">📋 Copier le message</button>
       <button type="button" class="btn-outline" id="copyEmailBtn" style="display:none;">📧 Copier les adresses</button>
     </div>
@@ -486,7 +486,7 @@ ${name}, ${city}`;
     const allSelected = currentDeputes.every(d => d.selected);
     toggleAllBtn.textContent = allSelected ? "Tout décocher" : "Tout sélectionner";
     const count = getSelectedDeputes().length;
-    searchStatus.textContent = `${count} député${count > 1 ? "s" : ""} sélectionné${count > 1 ? "s" : ""} (+ Argos 42 en CCI) :`;
+    searchStatus.textContent = `${count} député${count > 1 ? "s" : ""} sélectionné${count > 1 ? "s" : ""}  :`;
   }
 
   toggleAllBtn.addEventListener("click", () => {
@@ -501,7 +501,7 @@ ${name}, ${city}`;
     const cp = cpInput.value.trim();
     if (!/^\d{5}$/.test(cp)) {
       searchError.style.display = "block";
-      searchError.textContent = "Veuillez entrer un code postal valide à 5 chiffres (ex : 42800).";
+      searchError.textContent = "Veuillez entrer un code postal valide à 5 chiffres.";
       return;
     }
 
