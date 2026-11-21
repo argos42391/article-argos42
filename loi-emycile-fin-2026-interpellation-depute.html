@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interpeller mon député – ARGOS 42</title>
+  <style>
+    :root {
+      --primary: #1b4332;
+      --primary-hover: #2d6a4f;
+      --accent: #e76f51;
+      --accent-hover: #d65a3b;
+      --bg: #f8faf9;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: transparent;
+      color: var(--text);
+      line-height: 1.5;
+      padding: 8px;
+    }
+
+    .widget-box {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--card);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e6f4ea;
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .step {
+      margin-bottom: 20px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #eef2f0;
+    }
+
+    .step:last-of-type {
+      border-bottom: none;
+      margin-bottom: 10px;
+      padding-bottom: 0;
+    }
+
+    .step-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .step-num {
+      background: var(--primary);
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      min-width: 180px;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 11px 18px;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:active {
+      transform: scale(0.99);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+
+    .depute-list {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .depute-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .depute-card:hover, .depute-card.selected {
+      border-color: var(--primary);
+      background: #edf7f1;
+    }
+
+    .depute-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .depute-info img {
+      width: 46px;
+      height: 58px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #e5e7eb;
+    }
+
+    .depute-name {
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+
+    .depute-circo {
+      font-size: 0.83rem;
+      color: var(--muted);
+    }
+
+    .depute-email {
+      font-size: 0.82rem;
+      color: var(--primary);
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    .user-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 540px) {
+      .user-grid {
+        grid-template-columns: 1fr;
+      }
+      .depute-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 230px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text);
+      background: #fafafa;
+      resize: vertical;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .status-msg {
+      font-size: 0.88rem;
+      margin-top: 8px;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .error-msg {
+      color: #b91c1c;
+      font-size: 0.88rem;
+      margin-top: 8px;
+    }
+
+    .fallback-link {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .fallback-link a {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+<div class="widget-box">
+  <span class="badge">Action citoyenne • Votes les 30 nov. &amp; 1er déc. 2026</span>
+  <h2>Interpellez votre député en 30 secondes</h2>
+  <p class="subtitle">Trouvez automatiquement l'adresse e-mail de votre député et envoyez-lui le message d'ARGOS 42 avant les votes à l'Assemblée nationale.</p>
+
+  <!-- ÉTAPE 1 : RECHERCHE DÉPUTÉ -->
+  <div class="step">
+    <div class="step-title"><span class="step-num">1</span> Trouvez votre député</div>
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Votre code postal ou commune (ex : 42000 ou Saint-Étienne)" />
+      <button type="button" class="btn-primary" id="searchBtn">Rechercher</button>
+    </div>
+    <div id="searchStatus" class="status-msg" style="display:none;"></div>
+    <div id="searchError" class="error-msg" style="display:none;"></div>
+    <div id="deputeList" class="depute-list"></div>
+    <p class="fallback-link">
+      Vous ne trouvez pas votre circonscription ? <a href="https://www2.assemblee-nationale.fr/recherche-localisee/carte/FRANCE" target="_blank" rel="noopener">Vérifier sur le site de l'Assemblée nationale</a>.
+    </p>
+  </div>
+
+  <!-- ÉTAPE 2 : SIGNATURE -->
+  <div class="step">
+    <div class="step-title"><span class="step-num">2</span> Vos coordonnées (pour signer le mail)</div>
+    <div class="user-grid">
+      <input type="text" id="userName" placeholder="Votre Prénom et Nom" />
+      <input type="text" id="userCity" placeholder="Votre commune" />
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 : MESSAGE & ENVOI -->
+  <div class="step">
+    <div class="step-title"><span class="step-num">3</span> Vérifiez et envoyez le message</div>
+    <textarea id="emailBody"></textarea>
+    <div class="actions">
+      <a id="mailtoBtn" href="#" class="btn-accent">✉️ Envoyer via ma messagerie</a>
+      <button type="button" class="btn-secondary" id="copyMsgBtn">📋 Copier le message</button>
+      <button type="button" class="btn-secondary" id="copyEmailBtn" style="display:none;">📧 Copier l'adresse e-mail</button>
+    </div>
+    <div id="copyConfirm" class="status-msg" style="display:none;"></div>
+  </div>
+</div>
+
+<script>
+  const searchInput = document.getElementById("searchInput");
+  const searchBtn = document.getElementById("searchBtn");
+  const searchStatus = document.getElementById("searchStatus");
+  const searchError = document.getElementById("searchError");
+  const deputeList = document.getElementById("deputeList");
+
+  const userNameInput = document.getElementById("userName");
+  const userCityInput = document.getElementById("userCity");
+  const emailBody = document.getElementById("emailBody");
+  const mailtoBtn = document.getElementById("mailtoBtn");
+  const copyMsgBtn = document.getElementById("copyMsgBtn");
+  const copyEmailBtn = document.getElementById("copyEmailBtn");
+  const copyConfirm = document.getElementById("copyConfirm");
+
+  let selectedDepute = null;
+
+  const emailSubject = "Protection animale : votez pour les propositions de loi n° 3306 et n° 388 (30 nov. & 1er déc.)";
+
+  function buildMessage() {
+    let salutation = "Madame la Députée / Monsieur le Député,";
+    if (selectedDepute) {
+      if (selectedDepute.sexe === "F") {
+        salutation = `Madame la Députée ${selectedDepute.nom},`;
+      } else if (selectedDepute.sexe === "H") {
+        salutation = `Monsieur le Député ${selectedDepute.nom},`;
+      } else {
+        salutation = `Madame la Députée / Monsieur le Député ${selectedDepute.nom},`;
+      }
+    }
+
+    const name = userNameInput.value.trim() || "[Prénom Nom]";
+    const city = userCityInput.value.trim() || "[Votre commune]";
+
+    const text = `${salutation}
+
+Les 30 novembre et 1er décembre 2026, l’Assemblée nationale examinera deux propositions de loi essentielles pour la protection animale : la proposition de loi n° 3306 visant à créer un fichier national des personnes ayant l’interdiction de détenir un animal, et la proposition de loi n° 388 visant à interdire la vente de chiens et de chats dans les foires et salons spécialisés.
+
+En tant qu’électeur / électrice de votre circonscription, je vous demande de soutenir ces deux textes et de voter en leur faveur. Je compte également sur vous pour qu’ils puissent être définitivement adoptés avant la suspension des travaux parlementaires, fin février 2027.
+
+Je vous remercie de l’attention que vous porterez à ma demande et vous prie d’agréer, Madame la Députée / Monsieur le Député, l’expression de mes salutations distinguées.
+
+${name}, ${city}`;
+
+    emailBody.value = text;
+    updateMailto();
+  }
+
+  function updateMailto() {
+    const to = selectedDepute && selectedDepute.email ? selectedDepute.email : "";
+    const subject = encodeURIComponent(emailSubject);
+    const body = encodeURIComponent(emailBody.value);
+    mailtoBtn.href = `mailto:${to}?subject=${subject}&body=${body}`;
+  }
+
+  async function searchDepute() {
+    const query = searchInput.value.trim();
+    if (!query) return;
+
+    searchError.style.display = "none";
+    searchStatus.style.display = "block";
+    searchStatus.textContent = "Recherche en cours...";
+    deputeList.innerHTML = "";
+
+    try {
+      // Utilisation de l'API ouverte NosDéputés.fr (couvre code postal et nom de commune)
+      const url = `https://www.nosdeputes.fr/recherche/${encodeURIComponent(query)}?format=json`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Erreur réseau");
+      const data = await response.json();
+
+      const results = (data.results || []).filter(r => r.document_type === "Parlementaire");
+
+      if (results.length === 0) {
+        searchStatus.style.display = "none";
+        searchError.style.display = "block";
+        searchError.textContent = "Aucun député trouvé pour cette recherche. Essayez avec le nom exact de votre commune ou votre code postal.";
+        return;
+      }
+
+      searchStatus.textContent = results.length > 1
+        ? `${results.length} députés trouvés pour cette zone. Cliquez sur le vôtre :`
+        : "Député trouvé et sélectionné :";
+
+      results.forEach((item, index) => {
+        const doc = item.document;
+        const email = doc.emails && doc.emails.length > 0 ? doc.emails[0].email : "";
+        const slug = doc.slug || "";
+        const photoUrl = slug ? `https://www.nosdeputes.fr/depute/photo/${slug}/60` : "";
+
+        const card = document.createElement("div");
+        card.className = "depute-card" + (index === 0 ? " selected" : "");
+        card.innerHTML = `
+          <div class="depute-info">
+            ${photoUrl ? `<img src="${photoUrl}" alt="${doc.nom}" onerror="this.style.display='none'">` : ""}
+            <div>
+              <div class="depute-name">${doc.nom} (${doc.groupe_sigle || ""})</div>
+              <div class="depute-circo">${doc.nom_circo} – ${doc.num_circo}e circonscription</div>
+              <div class="depute-email">${email || "E-mail non renseigné"}</div>
+            </div>
+          </div>
+          <span style="font-size:0.82rem; font-weight:700; color:#1b4332;">Sélectionner</span>
+        `;
+
+        card.addEventListener("click", () => {
+          document.querySelectorAll(".depute-card").forEach(c => c.classList.remove("selected"));
+          card.classList.add("selected");
+          selectDepute({
+            nom: doc.nom,
+            sexe: doc.sexe,
+            email: email
+          });
+        });
+
+        deputeList.appendChild(card);
+
+        if (index === 0) {
+          selectDepute({
+            nom: doc.nom,
+            sexe: doc.sexe,
+            email: email
+          });
+        }
+      });
+
+      // Pré-remplir la commune si l'utilisateur a tapé un nom de ville
+      if (isNaN(query) && !userCityInput.value) {
+        userCityInput.value = query.charAt(0).toUpperCase() + query.slice(1);
+        buildMessage();
+      }
+    } catch (err) {
+      searchStatus.style.display = "none";
+      searchError.style.display = "block";
+      searchError.textContent = "Impossible de joindre l'annuaire automatique pour le moment. Vous pouvez copier le message ci-dessous et trouver votre député via le lien officiel.";
+    }
+  }
+
+  function selectDepute(dep) {
+    selectedDepute = dep;
+    if (dep.email) {
+      copyEmailBtn.style.display = "inline-block";
+    } else {
+      copyEmailBtn.style.display = "none";
+    }
+    buildMessage();
+  }
+
+  searchBtn.addEventListener("click", searchDepute);
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") searchDepute();
+  });
+
+  userNameInput.addEventListener("input", buildMessage);
+  userCityInput.addEventListener("input", buildMessage);
+  emailBody.addEventListener("input", updateMailto);
+
+  copyMsgBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(emailBody.value).then(() => {
+      copyConfirm.style.display = "block";
+      copyConfirm.textContent = "✅ Message copié ! Il ne vous reste plus qu'à le coller dans votre mail.";
+      setTimeout(() => { copyConfirm.style.display = "none"; }, 4000);
+    });
+  });
+
+  copyEmailBtn.addEventListener("click", () => {
+    if (selectedDepute && selectedDepute.email) {
+      navigator.clipboard.writeText(selectedDepute.email).then(() => {
+        copyConfirm.style.display = "block";
+        copyConfirm.textContent = `✅ Adresse copiée : ${selectedDepute.email}`;
+        setTimeout(() => { copyConfirm.style.display = "none"; }, 4000);
+      });
+    }
+  });
+
+  // Initialisation au chargement
+  buildMessage();
+</script>
+
+</body>
+</html>
