@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boîte à outils éditoriale — ARGOS 42</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --caramel: #a4470e;
+      --caramel-dark: #823608;
+      --vermillon: #e5622e;
+      --beige: #e2d6c5;
+      --discret: #f7f4f2;
+      --chocolat: #372612;
+      --chocolat-soft: #6b533b;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--discret);
+      color: var(--chocolat);
+      padding: 28px 16px 60px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* En-tête */
+    header {
+      background: #ffffff;
+      border: 2px solid var(--caramel);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 20px rgba(55, 38, 18, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--beige);
+      color: var(--caramel);
+      border: 1px solid var(--caramel);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 2.1rem;
+      font-weight: 400;
+      color: var(--caramel);
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--chocolat-soft);
+      margin-top: 6px;
+    }
+
+    /* Filtres */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .filter-btn {
+      cursor: pointer;
+      border: 1.5px solid var(--caramel);
+      background: #ffffff;
+      color: var(--chocolat);
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 50px;
+      transition: all 0.15s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--caramel);
+      color: #ffffff;
+    }
+
+    /* Grille de modules */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1.5px solid var(--beige);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 14px rgba(55, 38, 18, 0.04);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .cat-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--caramel);
+      background: var(--discret);
+      border: 1px solid var(--beige);
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    .file-name {
+      font-family: monospace;
+      font-size: 0.78rem;
+      color: var(--chocolat-soft);
+    }
+
+    .card h2 {
+      font-size: 1.15rem;
+      color: var(--chocolat);
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 0.88rem;
+      color: var(--chocolat-soft);
+      margin-bottom: 14px;
+    }
+
+    .code-box {
+      background: var(--discret);
+      border: 1px solid var(--beige);
+      border-radius: 10px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--chocolat);
+      overflow-x: auto;
+      white-space: nowrap;
+      margin-bottom: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-copy, .btn-preview {
+      cursor: pointer;
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 9px 14px;
+      border-radius: 50px;
+      border: 1.5px solid var(--caramel);
+      transition: all 0.15s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-copy {
+      background: var(--caramel);
+      color: #ffffff;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .btn-copy:hover {
+      background: var(--caramel-dark);
+    }
+
+    .btn-copy.copied {
+      background: #2e6f40;
+      border-color: #2e6f40;
+    }
+
+    .btn-preview {
+      background: #ffffff;
+      color: var(--caramel);
+    }
+
+    .btn-preview:hover {
+      background: var(--beige);
+    }
+
+    /* Section Bloc Natif */
+    .native-section {
+      margin-top: 32px;
+      background: #ffffff;
+      border: 2px solid var(--beige);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .native-section h3 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.55rem;
+      font-weight: 400;
+      color: var(--caramel);
+      margin-bottom: 6px;
+    }
+
+    .native-section p {
+      font-size: 0.9rem;
+      color: var(--chocolat-soft);
+      margin-bottom: 12px;
+    }
+
+    textarea.native-code {
+      width: 100%;
+      height: 150px;
+      font-family: monospace;
+      font-size: 0.78rem;
+      padding: 12px;
+      border: 1.5px solid var(--beige);
+      border-radius: 10px;
+      background: var(--discret);
+      color: var(--chocolat);
+      margin-bottom: 10px;
+      resize: vertical;
+    }
+
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <span class="badge">🛠️ Usage interne • Rédaction &amp; Boutique</span>
+      <h1>Boîte à outils éditoriale ARGOS 42</h1>
+      <p class="subtitle">Copiez le code d'intégration en 1 clic et collez-le dans un bloc <strong>« HTML personnalisé »</strong> sur WordPress.</p>
+    </div>
+  </header>
+
+  <div class="filters">
+    <button type="button" class="filter-btn active" onclick="filterCards('all', this)">Tous les modules</button>
+    <button type="button" class="filter-btn" onclick="filterCards('article', this)">📰 Articles de blog</button>
+    <button type="button" class="filter-btn" onclick="filterCards('juridique', this)">⚖️ Juridique &amp; Plaidoyer</button>
+    <button type="button" class="filter-btn" onclick="filterCards('boutique', this)">🛍️ Boutique</button>
+  </div>
+
+  <div class="grid" id="cardsGrid">
+
+    <!-- 1. Feuilleteur Biglou -->
+    <div class="card" data-cat="boutique">
+      <div>
+        <div class="card-top">
+          <span class="cat-tag">🛍️ Boutique • Biglou</span>
+          <span class="file-name">feuilleteur-biglou.html</span>
+        </div>
+        <h2>Feuilleteur interactif — Biglou Tome 1</h2>
+        <p>Permet aux visiteurs de feuilleter les premières pages illustrées directement sur la fiche produit ou un article.</p>
+        <div class="code-box" id="code-1">&lt;div style="max-width:750px;margin:24px auto;text-align:center;"&gt;&lt;iframe src="https://argos42391.github.io/article-argos42/feuilleteur-biglou.html" width="100%" height="580" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;</div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-copy" onclick="copyCode('code-1', this)">📋 Copier le code WordPress</button>
+        <a href="feuilleteur-biglou.html" target="_blank" class="btn-preview">👁️ Aperçu</a>
+      </div>
+    </div>
+
+    <!-- 2. Cartes Mémorielles 14-18 -->
+    <div class="card" data-cat="article">
+      <div>
+        <div class="card-top">
+          <span class="cat-tag">📰 Article • Histoire</span>
+          <span class="file-name">memorial-animaux-14-18.html</span>
+        </div>
+        <h2>Cartes à retourner — Animaux de 14-18</h2>
+        <p>4 cartes 3D interactives (Vaillant, Cher Ami, Rintintin, Équidés) pour l'article sur la Première Guerre mondiale.</p>
+        <div class="code-box" id="code-2">&lt;div style="max-width:750px;margin:24px auto;text-align:center;"&gt;&lt;iframe src="https://argos42391.github.io/article-argos42/memorial-animaux-14-18.html" width="100%" height="610" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;</div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-copy" onclick="copyCode('code-2', this)">📋 Copier le code WordPress</button>
+        <a href="memorial-animaux-14-18.html" target="_blank" class="btn-preview">👁️ Aperçu</a>
+      </div>
+    </div>
+
+    <!-- 3. Décrypteur Préjudice Animal (Vienne) -->
+    <div class="card" data-cat="juridique">
+      <div>
+        <div class="card-top">
+          <span class="cat-tag">⚖️ Juridique • Jurisprudence</span>
+          <span class="file-name">decrypteur-prejudice-animal.html</span>
+        </div>
+        <h2>Décrypteur juridique — Préjudice animal (TJ Vienne)</h2>
+        <p>Module à 3 onglets : raisonnement en 3 temps, Pénal vs Civil (les sommes) et frise des décisions clés.</p>
+        <div class="code-box" id="code-3">&lt;div style="max-width:750px;margin:24px auto;text-align:center;"&gt;&lt;iframe src="https://argos42391.github.io/article-argos42/decrypteur-prejudice-animal.html" width="100%" height="520" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;</div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-copy" onclick="copyCode('code-3', this)">📋 Copier le code WordPress</button>
+        <a href="decrypteur-prejudice-animal.html" target="_blank" class="btn-preview">👁️ Aperçu</a>
+      </div>
+    </div>
+
+    <!-- 4. Décodeur Halloween -->
+    <div class="card" data-cat="article">
+      <div>
+        <div class="card-top">
+          <span class="cat-tag">📰 Article • Comportement</span>
+          <span class="file-name">decodeur-halloween-animal.html</span>
+        </div>
+        <h2>Décodeur Halloween — Costume ou malaise ?</h2>
+        <p>Compare en 1 clic ce que l'humain croit sur les réseaux sociaux et ce que ressent réellement le chien ou le chat.</p>
+        <div class="code-box" id="code-4">&lt;div style="max-width:750px;margin:24px auto;text-align:center;"&gt;&lt;iframe src="https://argos42391.github.io/article-argos42/decodeur-halloween-animal.html" width="100%" height="360" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;</div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-copy" onclick="copyCode('code-4', this)">📋 Copier le code WordPress</button>
+        <a href="decodeur-halloween-animal.html" target="_blank" class="btn-preview">👁️ Aperçu</a>
+      </div>
+    </div>
+
+    <!-- 5. Calculateur Gobelet -->
+    <div class="card" data-cat="boutique">
+      <div>
+        <div class="card-top">
+          <span class="cat-tag">🛍️ Boutique • Goodies</span>
+          <span class="file-name">impact-gobelet-argos42.html</span>
+        </div>
+        <h2>Calculateur d'impact — Gobelet réutilisable</h2>
+        <p>Curseur interactif pour estimer les gobelets jetables évités et inciter aux commandes par lot.</p>
+        <div class="code-box" id="code-5">&lt;div style="max-width:750px;margin:24px auto;text-align:center;"&gt;&lt;iframe src="https://argos42391.github.io/article-argos42/impact-gobelet-argos42.html" width="100%" height="310" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;</div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-copy" onclick="copyCode('code-5', this)">📋 Copier le code WordPress</button>
+        <a href="impact-gobelet-argos42.html" target="_blank" class="btn-preview">👁️ Aperçu</a>
+      </div>
+    </div>
+
+    <!-- 6. Quiz existants -->
+    <div class="card" data-cat="article">
+      <div>
+        <div class="card-top">
+          <span class="cat-tag">📰 Articles • Quiz</span>
+          <span class="file-name">argos-quiz.css</span>
+        </div>
+        <h2>Modèle Quiz ARGOS 42 (Signaux &amp; Expérimentation)</h2>
+        <p>Utilise la feuille de style centralisée <code>argos-quiz.css</code> pour tous les quiz éducatifs du blog.</p>
+        <div class="code-box" id="code-6">&lt;link rel="stylesheet" href="https://argos42391.github.io/article-argos42/argos-quiz.css"&gt;</div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn-copy" onclick="copyCode('code-6', this)">📋 Copier le lien CSS</button>
+        <a href="argos-quiz.css" target="_blank" class="btn-preview">👁️ Voir CSS</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Gabarit natif WordPress sans iframe -->
+  <div class="native-section">
+    <h3>Gabarit natif WordPress (3 cartes alignées sans iframe)</h3>
+    <p>Pour les articles d'actualité ou les fiches produits simples : collez ce code dans un bloc <strong>HTML personnalisé</strong> de WordPress pour utiliser directement le style <code>carte-claire</code> du thème.</p>
+    <textarea class="native-code" id="nativeTemplate" readonly><div style="display:flex;flex-wrap:wrap;gap:16px;margin:24px 0 32px">
+  <div class="carte-claire" style="flex:1 1 200px;margin:0;align-items:flex-start;text-align:left;gap:8px">
+    <p class="titre">[À MODIFIER : Titre 1]</p>
+    <p><strong>[À MODIFIER : Sous-titre en gras]</strong></p>
+    <p>[À MODIFIER : Texte court explicatif]</p>
+  </div>
+  <div class="carte-claire" style="flex:1 1 200px;margin:0;align-items:flex-start;text-align:left;gap:8px">
+    <p class="titre">[À MODIFIER : Titre 2]</p>
+    <p><strong>[À MODIFIER : Sous-titre en gras]</strong></p>
+    <p>[À MODIFIER : Texte court explicatif]</p>
+  </div>
+  <div class="carte-claire" style="flex:1 1 200px;margin:0;align-items:flex-start;text-align:left;gap:8px">
+    <p class="titre">[À MODIFIER : Titre 3]</p>
+    <p><strong>[À MODIFIER : Sous-titre en gras]</strong></p>
+    <p>[À MODIFIER : Texte court explicatif]</p>
+  </div>
+</div></textarea>
+    <button type="button" class="btn-copy" style="max-width: 280px;" onclick="copyTextarea(this)">📋 Copier le gabarit 3 cartes</button>
+  </div>
+</div>
+
+<script>
+  function copyCode(id, btn) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.innerHTML;
+      btn.innerHTML = '✅ Copié !';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = old;
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  function copyTextarea(btn) {
+    const text = document.getElementById('nativeTemplate').value;
+    navigator.clipboard.writeText(text).then(() => {
+      const old = btn.innerHTML;
+      btn.innerHTML = '✅ Gabarit copié !';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = old;
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  function filterCards(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#cardsGrid .card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
