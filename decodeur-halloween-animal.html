@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Décodeur Halloween : Costume ou malaise ? — ARGOS 42</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --caramel: #a4470e;
+      --vermillon: #e5622e;
+      --beige: #e2d6c5;
+      --discret: #f7f4f2;
+      --chocolat: #372612;
+      --chocolat-soft: #6b533b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: transparent; color: var(--chocolat); padding: 8px; }
+    .box {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--discret);
+      border: 2px solid var(--caramel);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 6px 20px rgba(55, 38, 18, 0.08);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--beige);
+      color: var(--caramel);
+      border: 1px solid var(--caramel);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: var(--caramel);
+      margin-bottom: 6px;
+    }
+    p.sub { font-size: 0.9rem; color: var(--chocolat-soft); margin-bottom: 16px; }
+    .btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .btn {
+      cursor: pointer;
+      border: 1.5px solid var(--caramel);
+      background: #fff;
+      color: var(--chocolat);
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 50px;
+      transition: all 0.15s;
+    }
+    .btn.active, .btn:hover { background: var(--caramel); color: #fff; }
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .col {
+      background: #fff;
+      border: 1.5px solid var(--beige);
+      border-radius: 12px;
+      padding: 15px;
+    }
+    .col.truth { border-color: var(--caramel); background: #fffaf7; }
+    .col-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--chocolat-soft);
+      margin-bottom: 6px;
+    }
+    .col.truth .col-tag { color: var(--caramel); }
+    .col p { font-size: 0.9rem; line-height: 1.45; }
+    @media (max-width: 540px) {
+      .result-grid { grid-template-columns: 1fr; }
+      h2 { font-size: 1.45rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="box">
+  <span class="badge">🎃 Décryptage comportemental</span>
+  <h2>« Il a l'air trop mignon ! » : ce qu'il ressent vraiment</h2>
+  <p class="sub">Cliquez sur une attitude vue en photo sur les réseaux sociaux pour lire le langage réel de l'animal :</p>
+
+  <div class="btns">
+    <button type="button" class="btn active" onclick="selectCase(0, this)">🐶 Il ne bouge plus du tout</button>
+    <button type="button" class="btn" onclick="selectCase(1, this)">🐱 Il marche au ras du sol</button>
+    <button type="button" class="btn" onclick="selectCase(2, this)">🐶 Il halète avec les oreilles en arrière</button>
+    <button type="button" class="btn" onclick="selectCase(3, this)">🐱 Ses pupilles sont immenses</button>
+  </div>
+
+  <div class="result-grid">
+    <div class="col">
+      <div class="col-tag">📱 Ce que l'humain croit</div>
+      <p id="humanView">« Il pose sagement pour la photo, il adore son costume de citrouille ! »</p>
+    </div>
+    <div class="col truth">
+      <div class="col-tag">🐾 La réalité de l'animal</div>
+      <p id="animalView"><strong>Il est tétanisé (sidération).</strong> Le vêtement comprime son thorax ou bloque ses repères sensoriels : il se fige par stress intense, pas par plaisir.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const cases = [
+    {
+      human: "« Il pose sagement pour la photo, il adore son costume de citrouille ! »",
+      animal: "<strong>Il est tétanisé (sidération).</strong> Le vêtement comprime son thorax ou bloque ses repères sensoriels : il se fige par stress intense, pas par plaisir."
+    },
+    {
+      human: "« Regarde comme il fait le timide dans sa cape de vampire ! »",
+      animal: "<strong>Il cherche à fuir une contrainte physique.</strong> Le chat utilise ses vibrisses et sa peau pour s'orienter : un tissu sur le dos déséquilibre totalement sa posture."
+    },
+    {
+      human: "« Il sourit à la caméra, il est tout excité par la fête ! »",
+      animal: "<strong>Signaux d'apaisement et coup de chaud.</strong> Le halètement hors effort et les oreilles plaquées traduisent une anxiété ou une surchauffe sous un tissu épais."
+    },
+    {
+      human: "« Il a des grands yeux émerveillés devant les décorations ! »",
+      animal: "<strong>Décharge d'adrénaline (peur).</strong> Chez le chat, la dilatation brutale des pupilles associée aux oreilles tournées sur le côté annonce une panique ou une réaction défensive."
+    }
+  ];
+
+  function selectCase(idx, btn) {
+    document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('humanView').innerHTML = cases[idx].human;
+    document.getElementById('animalView').innerHTML = cases[idx].animal;
+  }
+</script>
+</body>
+</html>
