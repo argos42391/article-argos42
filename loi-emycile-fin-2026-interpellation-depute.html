@@ -6,15 +6,15 @@
   <title>Interpeller mon député – ARGOS 42</title>
   <style>
     :root {
-      --primary: #1b4332;
-      --primary-hover: #2d6a4f;
-      --accent: #e76f51;
-      --accent-hover: #d65a3b;
-      --bg: #f8faf9;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #d1d5db;
+      --primary: #a44700;
+      --primary-hover: #a44700;
+      --accent: #e5622e;
+      --accent-hover:#e5622e;
+      --bg: #f7f4f2;
+      --card: #fffcf0;
+      --text: #372612;
+      --muted: #e2d6c5;
+      --border: #e2d6c5;
       --radius: 12px;
     }
 
@@ -40,7 +40,7 @@
 
     .badge {
       display: inline-block;
-      background: #e6f4ea;
+      background:#f7f4f2;
       color: var(--primary);
       font-size: 0.78rem;
       font-weight: 700;
@@ -57,7 +57,7 @@
     .step {
       margin-bottom: 20px;
       padding-bottom: 18px;
-      border-bottom: 1px solid #eef2f0;
+      border-bottom: 1px solid #f7f4f2;
     }
     .step:last-of-type { border-bottom: none; margin-bottom: 10px; padding-bottom: 0; }
 
@@ -251,21 +251,24 @@
   const copyConfirm = document.getElementById("copyConfirm");
 
   let selectedDepute = null;
-  let deputesCache = null;
 
   const emailSubject = "Protection animale : votez pour les propositions de loi n° 3306 et n° 388 (30 nov. & 1er déc.)";
 
-  // Charge la liste ouverte des députés actuels (GitHub Datan / OpenData) sans blocage CORS
-  async function getDeputesList() {
-    if (deputesCache) return deputesCache;
-    const res = await fetch("https://raw.githubusercontent.com/datanFR/datan/master/scripts/deputes_actuels.json");
-    if (!res.ok) throw new Error("Erreur chargement base députés");
-    deputesCache = await res.json();
-    return deputesCache;
+  // API officielle tabulaire de data.gouv.fr (Jeu de données officiel de l'Assemblée nationale - Députés actifs)
+  // Ressource officielle : https://www.data.gouv.fr/fr/datasets/deputes-actifs-de-lassemblee-nationale-informations-et-statistiques/
+  const DATA_GOUV_RESOURCE = "092bd7bb-1543-405b-b53c-932ebb49bb8e";
+
+  async function fetchDeputesByDept(codeDept) {
+    const deptFormatted = String(codeDept).padStart(2, "0");
+    const url = `https://tabular-api.data.gouv.fr/api/resources/${DATA_GOUV_RESOURCE}/data/?departementCode__exact=${encodeURIComponent(deptFormatted)}&page_size=50`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Erreur API data.gouv");
+    const json = await res.json();
+    return json.data || [];
   }
 
   function formatEmailAN(prenom, nom) {
-    const clean = (str) => str
+    const clean = (str) => String(str || "")
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
@@ -328,7 +331,7 @@ ${name}, ${city}`;
     searchStatus.textContent = "Recherche de votre commune et des députés du département...";
 
     try {
-      // 1. API officielle de l'État français (CORS ouvert à 100%)
+      // 1. API officielle de l'État français (geo.api.gouv.fr)
       const geoRes = await fetch(`https://geo.api.gouv.fr/communes?codePostal=${cp}&fields=nom,code,codeDepartement`);
       const communes = await geoRes.json();
 
@@ -339,7 +342,6 @@ ${name}, ${city}`;
         return;
       }
 
-      // Affiche le sélecteur de commune si plusieurs communes partagent le code postal (ex: 42800 -> Rive-de-Gier, Genilac, etc.)
       if (communes.length > 1) {
         communeBox.style.display = "block";
         communeSelect.innerHTML = communes.map(c => `<option value="${c.nom}">${c.nom}</option>`).join("");
@@ -354,29 +356,28 @@ ${name}, ${city}`;
 
       const codeDept = communes[0].codeDepartement;
 
-      // 2. Récupère les députés du département depuis GitHub (CORS ouvert à 100%)
-      const allDeputes = await getDeputesList();
-      const deptDeputes = allDeputes.filter(d => String(d.departementCode).padStart(2, "0") === String(codeDept).padStart(2, "0"));
+      // 2. API officielle data.gouv.fr (Députés actifs de l'Assemblée nationale)
+      const deptDeputes = await fetchDeputesByDept(codeDept);
 
-      if (deptDeputes.length === 0) {
+      if (!deptDeputes || deptDeputes.length === 0) {
         searchStatus.style.display = "none";
         searchError.style.display = "block";
-        searchError.textContent = "Impossible de lister les députés de ce département. Utilisez le lien officiel ci-dessous.";
+        searchError.textContent = "Aucun député trouvé pour ce département. Utilisez le lien officiel ci-dessous.";
         return;
       }
 
-      searchStatus.textContent = `Sélectionnez le député de votre circonscription (${communes[0].departement ? communes[0].departement.nom : "Département " + codeDept}) :`;
+      searchStatus.textContent = `Sélectionnez le député de votre circonscription (Département ${codeDept}) :`;
 
       deptDeputes.sort((a, b) => Number(a.circo) - Number(b.circo)).forEach((d, idx) => {
-        const email = formatEmailAN(d.prenom, d.nom);
+        const email = d.mail || formatEmailAN(d.prenom, d.nom);
         const fullName = `${d.prenom} ${d.nom}`;
 
         const card = document.createElement("div");
         card.className = "depute-card" + (idx === 0 ? " selected" : "");
         card.innerHTML = `
           <div>
-            <div class="depute-name">${d.civ || ""} ${fullName} (${d.groupeAbrev || ""})</div>
-            <div class="depute-circo">${d.departementNom} – ${d.circo}e circonscription</div>
+            <div class="depute-name">${d.civ || ""} ${fullName} ${d.groupeAbrev ? "(" + d.groupeAbrev + ")" : ""}</div>
+            <div class="depute-circo">${d.departementNom || "Département " + codeDept} – ${d.circo}e circonscription</div>
             <div class="depute-email">${email}</div>
           </div>
           <span style="font-size:0.82rem; font-weight:700; color:#1b4332;">Choisir</span>
