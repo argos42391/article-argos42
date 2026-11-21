@@ -1,0 +1,225 @@
+/* Charte graphique officielle ARGOS 42 - Modules & Quiz */
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  --caramel: #a4470e;
+  --caramel-dark: #823608;
+  --vermillon: #e5622e;
+  --beige: #e2d6c5;
+  --discret: #f7f4f2;
+  --chocolat: #372612;
+  --chocolat-soft: #6b533b;
+  --ok-bg: #e8f5e9;
+  --ok-border: #2e7d32;
+  --ko-bg: #ffebee;
+  --ko-border: #c62828;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: transparent;
+  color: var(--chocolat);
+  line-height: 1.5;
+  padding: 8px;
+}
+
+.quiz-box {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--discret);
+  border: 2px solid var(--caramel);
+  border-radius: var(--radius);
+  padding: 26px;
+  box-shadow: 0 6px 20px rgba(55, 38, 18, 0.08);
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.badge {
+  display: inline-block;
+  background: var(--beige);
+  color: var(--caramel);
+  border: 1px solid var(--caramel);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 5px 14px;
+  border-radius: 50px;
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--chocolat-soft);
+}
+
+h2 {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--caramel);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 0.94rem;
+  color: var(--chocolat-soft);
+  margin-bottom: 18px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1.5px solid var(--beige);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.q-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.q-emoji {
+  font-size: 2rem;
+  background: var(--beige);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1.5px solid var(--caramel);
+}
+
+.q-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--chocolat);
+}
+
+.options {
+  display: grid;
+  gap: 10px;
+}
+
+.opt-btn {
+  width: 100%;
+  text-align: left;
+  background: var(--discret);
+  color: var(--chocolat);
+  border: 1.5px solid var(--beige);
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.opt-btn:hover:not(:disabled) {
+  border-color: var(--caramel);
+  background: #f5ebe0;
+}
+
+.opt-btn:disabled { cursor: default; }
+
+.opt-btn.correct {
+  background: var(--ok-bg);
+  border-color: var(--ok-border);
+  color: #1b5e20;
+  font-weight: 700;
+}
+
+.opt-btn.wrong {
+  background: var(--ko-bg);
+  border-color: var(--ko-border);
+  color: #b71c1c;
+}
+
+.feedback {
+  margin-top: 14px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  background: var(--discret);
+  border-left: 4px solid var(--caramel);
+  display: none;
+}
+
+.nav-row {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-pill {
+  cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 12px 26px;
+  background: var(--caramel);
+  color: #ffffff;
+  transition: background 0.2s;
+}
+
+.btn-pill:hover { background: var(--caramel-dark); }
+
+.result-box {
+  text-align: center;
+  padding: 12px 6px;
+  display: none;
+}
+
+.score-circle {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--beige);
+  border: 2px solid var(--caramel);
+  color: var(--caramel);
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+}
+
+.result-title {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 1.7rem;
+  color: var(--caramel);
+  margin-bottom: 8px;
+}
+
+.result-desc {
+  font-size: 0.95rem;
+  color: var(--chocolat);
+  max-width: 540px;
+  margin: 0 auto 18px;
+}
+
+@media (max-width: 540px) {
+  .quiz-box { padding: 18px; }
+  h2 { font-size: 1.5rem; }
+  .q-emoji { width: 44px; height: 44px; font-size: 1.6rem; }
+}
