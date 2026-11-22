@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5 ans de la loi maltraitance animale : interpellons le Gouvernement | Argos 42</title>
+  <style>
+    :root {
+      --primary: #1b4332;
+      --accent: #d97706;
+      --bg: #f8faf9;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --border: #d1d5db;
+    }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.6; }
+    .container { max-width: 720px; margin: 20px auto; background: var(--card); padding: 32px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+    .badge { display: inline-block; background: #e6f4ea; color: var(--primary); font-weight: 700; font-size: 0.85rem; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+    h1 { color: var(--primary); font-size: 1.75rem; margin-top: 0; line-height: 1.25; }
+    .intro { color: var(--muted); margin-bottom: 24px; }
+    .key-facts { background: #f3f4f6; border-left: 4px solid var(--primary); padding: 14px 18px; border-radius: 6px; margin-bottom: 24px; font-size: 0.95rem; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95rem; }
+    input[type="text"], input[type="email"], select {
+      width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem;
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
+    .checkbox-group { display: flex; align-items: flex-start; gap: 10px; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; border-radius: 8px; margin: 20px 0; }
+    .checkbox-group input { margin-top: 4px; transform: scale(1.2); cursor: pointer; }
+    .checkbox-group label { font-weight: 400; font-size: 0.9rem; margin: 0; cursor: pointer; }
+    button {
+      width: 100%; background: var(--primary); color: #fff; border: none; padding: 14px;
+      font-size: 1.05rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: background 0.2s;
+    }
+    button:hover { background: #143326; }
+    .note { font-size: 0.82rem; color: var(--muted); text-align: center; margin-top: 14px; }
+    #confirmation { display: none; background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 16px; border-radius: 8px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <span class="badge">BILAN 5 ANS · LOI DU 30 NOVEMBRE 2021</span>
+  <h1>Des textes sur le papier, mais où sont les contrôles et les moyens ?</h1>
+  <p class="intro">
+    Cinq ans après l'adoption de la loi contre la maltraitance animale, l'expérimentation sur les chats errants arrive à son terme le <strong>30 novembre 2026</strong>. Interpellez directement le Gouvernement pour exiger des actes concrets.
+  </p>
+
+  <div class="key-facts">
+    <strong>Ce que montre le bilan d'application :</strong><br>
+    • <strong>31 mois</strong> se sont écoulés entre l'interdiction de vente en animalerie et sa sanction (août 2026).<br>
+    • Le contrôle des annonces en ligne <strong>« fait encore largement défaut »</strong> selon le Sénat.<br>
+    • <strong>Environ un chat sur deux</strong> n'est toujours pas identifié, et le financement durable de la stérilisation reste en suspens.
+  </div>
+
+  <form id="campagne-form">
+    <div class="form-group">
+      <label for="theme">Choisissez votre message d'interpellation :</label>
+      <select id="theme">
+        <option value="chats">Urgence 30 novembre : bilan et financement durable pour les chats errants</option>
+        <option value="global">Bilan des 5 ans : publier les chiffres de contrôle et encadrer la vente en ligne</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="prenom">Prénom *</label>
+        <input type="text" id="prenom" required placeholder="Ex. Camille">
+      </div>
+      <div class="form-group">
+        <label for="nom">Nom *</label>
+        <input type="text" id="nom" required placeholder="Ex. Martin">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="email">Votre adresse email *</label>
+        <input type="email" id="email" required placeholder="camille@exemple.fr">
+      </div>
+      <div class="form-group">
+        <label for="cp">Code postal *</label>
+        <input type="text" id="cp" required placeholder="Ex. 42000">
+      </div>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="optin-brevo">
+      <label for="optin-brevo">
+        J'accepte de m'inscrire à la newsletter d'<strong>Argos 42</strong> pour suivre l'avancée de cette campagne et les actions de protection animale (désinscription possible à tout moment).
+      </label>
+    </div>
+
+    <button type="submit">Ouvrir et envoyer mon email d'interpellation</button>
+    <p class="note">Votre messagerie s'ouvrira avec le courrier pré-rempli et une copie cachée (CCI) adressée à Argos 42 pour comptabiliser les envois.</p>
+  </form>
+
+  <div id="confirmation">
+    <strong>Merci pour votre mobilisation !</strong><br>
+    Si votre messagerie ne s'est pas ouverte automatiquement, vérifiez vos fenêtres bloquées ou envoyez votre message à : <code>cabinet-ministre@agriculture.gouv.fr</code> et <code>premier-ministre@cab.pm.gouv.fr</code>.
+  </div>
+</div>
+
+<!-- Iframe invisible permettant d'envoyer l'inscription à Brevo sans recharger la page -->
+<iframe name="brevo-target" style="display:none;"></iframe>
+<form id="brevo-hidden-form" action="https://515fee98.sibforms.com/serve/MUIFAOE9-0WLL55EQ3YiAHCDYCmPg3R_DQgyC_eC939oRa2x4yjKPD8pvZ3QDCNK_KTRgXkp8rdILxxZfKlDKyvmP6x-w8FErSqy6F6wk2AAgBb3UEWb_RC1q0vqXGOKm8KWXP7KjE4OvqI1Ln7MIaOPJJ_wOV484hwumBhmanIPVV0dWaLHr1u2QVynKGiJsjRjXEQ36-aDqk-7" method="POST" target="brevo-target" style="display:none;">
+  <input type="email" name="EMAIL" id="brevo-email">
+  <input type="text" name="PRENOM" id="brevo-prenom">
+  <input type="text" name="NOM" id="brevo-nom">
+  <input type="text" name="CODE_POSTAL" id="brevo-cp">
+  <input type="hidden" name="OPT_IN" value="1">
+  <input type="hidden" name="email_address_check" value="">
+  <input type="hidden" name="locale" value="fr">
+</form>
+
+<script>
+  document.getElementById('campagne-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const theme = document.getElementById('theme').value;
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom = document.getElementById('nom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const cp = document.getElementById('cp').value.trim();
+    const optin = document.getElementById('optin-brevo').checked;
+
+    // 1. Inscription Brevo silencieuse si la case est cochée
+    if (optin) {
+      document.getElementById('brevo-email').value = email;
+      document.getElementById('brevo-prenom').value = prenom;
+      document.getElementById('brevo-nom').value = nom;
+      document.getElementById('brevo-cp').value = cp;
+      document.getElementById('brevo-hidden-form').submit();
+    }
+
+    // 2. Paramètres de l'email d'interpellation
+    const destinataire = 'cabinet-ministre@agriculture.gouv.fr,premier-ministre@cab.pm.gouv.fr';
+    const cciArgos = 'ael@association-argos42.com';
+
+    let sujet = '';
+    let corps = '';
+
+    if (theme === 'chats') {
+      sujet = "Loi du 30 novembre 2021 : bilan et financement durable pour les chats errants";
+      corps = `Monsieur le Premier ministre, Monsieur le Ministre,
+
+Cinq ans après la promulgation de la loi du 30 novembre 2021 visant à lutter contre la maltraitance animale, l'expérimentation des conventions relatives à la gestion des chats errants (article 12) arrive à son terme le 30 novembre 2026.
+
+Alors qu'environ un chat sur deux n'est toujours pas identifié en France, la loi prévoit la remise d'un rapport d'évaluation au Parlement. De plus, l'appel à projets de 3 millions d'euros lancé en 2024 n'a pas été reconduit, et les modalités de l'enveloppe de 10 millions d'euros annoncée en juillet 2026 restent à ce jour non publiées.
+
+En tant que citoyen(ne) attaché(e) à la protection animale, je vous demande :
+1. La publication rapide du rapport d'évaluation de l'article 12 et du bilan chiffré de l'appel à projets 2024 ;
+2. La mise en place d'un financement pluriannuel pérenne pour soutenir les communes et les associations dans les campagnes d'identification et de stérilisation.
+
+Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'expression de ma haute considération.
+
+${prenom} ${nom} (${cp})`;
+    } else {
+      sujet = "5 ans de la loi du 30 novembre 2021 : publier les données de contrôle et encadrer les ventes";
+      corps = `Monsieur le Premier ministre, Monsieur le Ministre,
+
+Cinq ans après la promulgation de la loi du 30 novembre 2021 visant à lutter contre la maltraitance animale, le cadre juridique existe mais son application effective reste insuffisamment documentée.
+
+Il a fallu attendre août 2026 — soit 31 mois après l'entrée en vigueur de l'interdiction — pour que la vente de chiens et de chats en animalerie devienne sanctionnable. Par ailleurs, le contrôle de l'identification dans les annonces en ligne fait encore largement défaut selon le Sénat, et les contournements persistent (vente en ligne avec retrait en magasin, salons consacrés aux animaux).
+
+En tant que citoyen(ne) attaché(e) à la protection animale, je vous demande :
+1. La publication d'un bilan annuel des contrôles effectués (nombre de contrôles, procès-verbaux et amendes) et un calendrier précis pour la campagne de contrôles de la DGCCRF sur les ventes en ligne ;
+2. La délivrance du certificat d'engagement et de connaissance uniquement via le fichier national I-CAD pour éviter tout antidatage ;
+3. La notification à la Commission européenne, avant le 31 août 2028, des règles françaises plus strictes, dont l'interdiction de vente en animalerie.
+
+Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'expression de ma haute considération.
+
+${prenom} ${nom} (${cp})`;
+    }
+
+    // 3. Affichage du message de confirmation et ouverture du client mail
+    document.getElementById('confirmation').style.display = 'block';
+    window.location.href = `mailto:${destinataire}?bcc=${cciArgos}&subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+  });
+</script>
+
+</body>
+</html>
