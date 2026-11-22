@@ -42,7 +42,7 @@
     .hero {
       background-color: var(--argos-sand);
       border-bottom: 3px solid var(--argos-brown);
-      padding: 28px 24px;
+      padding: 28px 24px 24px 24px;
       text-align: center;
     }
     .hero-tag {
@@ -63,9 +63,43 @@
       font-size: 1.65rem;
       font-weight: 800;
       color: var(--text-dark);
-      margin: 0;
+      margin: 0 0 16px 0;
       line-height: 1.25;
     }
+
+    /* Badge Compteur en direct */
+    .counter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 1.5px solid var(--argos-brown);
+      color: var(--text-dark);
+      padding: 7px 16px;
+      border-radius: 50px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(156, 66, 0, 0.1);
+    }
+    .counter-dot {
+      width: 9px;
+      height: 9px;
+      background-color: var(--argos-brown);
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+    .counter-number {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.08rem;
+      color: var(--argos-brown);
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.5; }
+      100% { transform: scale(0.95); opacity: 1; }
+    }
+
     @media (max-width: 600px) {
       .hero { padding: 22px 18px; }
       .hero h1 { font-size: 1.35rem; }
@@ -250,7 +284,13 @@
 <div class="container">
   <div class="hero">
     <span class="hero-tag">🐾 Bilan 5 ans · Loi du 30 novembre 2021</span>
-    <h1> Interpellez les décideurs </h1>
+    <h1>5 ans de promesses : il est temps de passer des textes aux actes !</h1>
+    
+    <!-- Compteur en direct -->
+    <div class="counter-pill" aria-live="polite">
+      <span class="counter-dot"></span>
+      <span>Déjà <span class="counter-number" id="compteur-val">...</span> interpellations envoyées</span>
+    </div>
   </div>
 
   <div class="content">
@@ -293,7 +333,7 @@
           </label>
         </div>
         <p class="rgpd-notice">
-          <strong>Protection des données (RGPD) :</strong> Vos coordonnées servent uniquement à signer votre courrier. Si vous cochez la case ci-dessus, elles sont transmises à <strong>Argos 42</strong> via Brevo pour l'envoi de notre newsletter. Vous pouvez retirer votre consentement à tout moment via le lien de désinscription présent dans nos e-mails. <a id="link-rgpd" href="https://argos42.org/l-association-argos-42-missions-valeurs/politique-de-confidentialite/" target="_blank" rel="noopener">Politique de confidentialité</a>.
+          <strong>Protection des données (RGPD) :</strong> Vos coordonnées servent uniquement à signer votre courrier. Si vous cochez la case ci-dessus, elles sont transmises à <strong>Argos 42</strong> via Brevo pour l'envoi de notre newsletter. Vous pouvez retirer votre consentement à tout moment via le lien de désinscription présent dans nos e-mails. <a id="link-rgpd" href="https://association-argos42.com" target="_blank" rel="noopener">Politique de confidentialité</a>.
         </p>
       </div>
 
@@ -303,7 +343,7 @@
       </div>
 
       <p class="recipients-info">
-        Destinataires : <strong>Matignon</strong> & <strong>Ministère de l'Agriculture</strong>.
+        Destinataires : <strong>Matignon</strong> & <strong>Ministère de l'Agriculture</strong> (avec copie cachée à Argos 42 pour le suivi).
       </p>
     </form>
 
@@ -326,16 +366,49 @@
 <script>
   // ⚠️ À PERSONNALISER :
   const LIEN_RAPPORT = "https://VOTRE-LIEN-VERS-LE-RAPPORT-ARGOS42.FR";
-  const LIEN_CONFIDENTIALITE = "https://association-argos42.com/politique-de-confidentialite"; // Remplacez par l'URL exacte de vos mentions/RGPD
+  const LIEN_CONFIDENTIALITE = "https://association-argos42.com/politique-de-confidentialite";
   const DESTINATAIRES = "cabinet-ministre@agriculture.gouv.fr,premier-ministre@cab.pm.gouv.fr";
   const CCI_ARGOS = "ael@association-argos42.com";
   const SUJET_EMAIL = "5 ans de la loi du 30 novembre 2021 : publions les bilans et donnons des moyens concrets";
+  const COMPTEUR_BASE = 0; // Vous pouvez mettre un chiffre de départ ici si vous avez déjà reçu des mails (ex: 45)
 
   document.getElementById('link-rgpd').href = LIEN_CONFIDENTIALITE;
 
-  const corpsBase = `Monsieur le Premier ministre, Madame la Ministre,
+  // --- GESTION DU COMPTEUR EN DIRECT ---
+  const COUNTER_URL = "https://api.counterapi.dev/v1/argos42-campagnes/loi-2021-5ans";
+  const compteurEl = document.getElementById('compteur-val');
 
-Le 30 novembre 2026 marque les cinq ans de la loi visant à lutter contre la maltraitance animale, ainsi que le terme de l'expérimentation sur la gestion des chats errants prévue à son article 12.
+  async function chargerCompteur() {
+    try {
+      const res = await fetch(COUNTER_URL);
+      const data = await res.json();
+      const total = (data.count || 0) + COMPTEUR_BASE;
+      compteurEl.textContent = total.toLocaleString('fr-FR');
+    } catch (e) {
+      compteurEl.textContent = (COMPTEUR_BASE > 0 ? COMPTEUR_BASE : "1");
+    }
+  }
+
+  async function incrementerCompteur() {
+    // Évite qu'une même personne gonfle le compteur en cliquant 10 fois de suite
+    if (localStorage.getItem('argos_loi2021_compte') === '1') return;
+    try {
+      const res = await fetch(`${COUNTER_URL}/up`);
+      const data = await res.json();
+      const total = (data.count || 0) + COMPTEUR_BASE;
+      compteurEl.textContent = total.toLocaleString('fr-FR');
+      localStorage.setItem('argos_loi2021_compte', '1');
+    } catch (e) {
+      console.error("Erreur compteur", e);
+    }
+  }
+
+  chargerCompteur();
+
+  // --- TEXTE ET SIGNATURE EN DIRECT ---
+  const corpsBase = `Monsieur le Premier ministre, Monsieur le Ministre,
+
+Le 30 novembre 2026 marque les cinq ans de la loi visant à lutter contre la maltraitance animale — ainsi que le terme de l'expérimentation sur la gestion des chats errants prévue à son article 12.
 
 À cette occasion, le rapport d'analyse publié par l'association Argos 42 (${LIEN_RAPPORT}) met en lumière un décalage préoccupant entre les ambitions de la loi et sa mise en œuvre sur le terrain :
 - Il a fallu attendre août 2026, soit 31 mois après l'entrée en vigueur de l'interdiction, pour que la vente de chiens et de chats en animalerie devienne sanctionnable ;
@@ -343,7 +416,6 @@ Le 30 novembre 2026 marque les cinq ans de la loi visant à lutter contre la mal
 - Environ un chat sur deux n'est toujours pas identifié en France, tandis que l'appel à projets de 3 millions d'euros lancé en 2024 n'a pas été reconduit et que les modalités de l'enveloppe de 10 millions d'euros annoncée en juillet 2026 restent non publiées.
 
 En tant que citoyen(ne) attaché(e) à la protection animale, je vous demande :
-
 1. La publication immédiate du rapport d'évaluation sur les chats errants (article 12) et du bilan chiffré de l'appel à projets 2024 ;
 2. La mise en place d'un financement pluriannuel pérenne pour soutenir les communes et les associations dans les campagnes de stérilisation et d'identification ;
 3. La publication d'un bilan annuel des contrôles effectués (procès-verbaux et amendes), notamment sur les ventes d'animaux en ligne.
@@ -372,7 +444,6 @@ Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'ex
     textarea.value = corpsBase + derniereSignature;
   }
 
-  // Mise à jour fluide de la signature en direct sans écraser les modifications de l'utilisateur
   function mettreAJourSignatureEnDirect() {
     const nouvelleSignature = genererSignature();
     if (derniereSignature && textarea.value.endsWith(derniereSignature)) {
@@ -385,11 +456,9 @@ Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'ex
 
   initialiserTexte();
   [inputPrenom, inputNom, inputCp].forEach(el => el.addEventListener('input', mettreAJourSignatureEnDirect));
-
-  // Bouton rétablir le texte d'origine
   document.getElementById('reset-text').addEventListener('click', initialiserTexte);
 
-  // Inscription Brevo (uniquement si la case opt-in est cochée)
+  // --- INSCRIPTION BREVO ---
   let dejaInscritBrevo = false;
   function inscrireBrevoSiCoche() {
     const optin = document.getElementById('optin-brevo').checked;
@@ -404,10 +473,11 @@ Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'ex
     }
   }
 
-  // Envoi principal via client mail
+  // --- ENVOI EMAIL ---
   document.getElementById('interpellation-form').addEventListener('submit', function(e) {
     e.preventDefault();
     inscrireBrevoSiCoche();
+    incrementerCompteur();
 
     const prenom = inputPrenom.value.trim();
     const corpsFinal = textarea.value.trim();
@@ -418,9 +488,10 @@ Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'ex
     window.location.href = `mailto:${DESTINATAIRES}?bcc=${CCI_ARGOS}&subject=${encodeURIComponent(SUJET_EMAIL)}&body=${encodeURIComponent(corpsFinal)}`;
   });
 
-  // Bouton alternatif : Copier dans le presse-papiers
+  // --- COPIER DANS LE PRESSE-PAPIERS ---
   document.getElementById('copy-btn').addEventListener('click', function() {
     inscrireBrevoSiCoche();
+    incrementerCompteur();
 
     const aCopier = `À : ${DESTINATAIRES}\nCCI : ${CCI_ARGOS}\nObjet : ${SUJET_EMAIL}\n\n${textarea.value.trim()}`;
 
