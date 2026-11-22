@@ -3,108 +3,358 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>5 ans de la loi maltraitance animale : interpellons le Gouvernement | Argos 42</title>
+  <title>5 ans de la loi maltraitance animale : exigeons des actes ! | Argos 42</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1b4332;
-      --accent: #d97706;
-      --bg: #f8faf9;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #4b5563;
-      --border: #d1d5db;
+      --argos-brown: #9c4200;
+      --argos-brown-dark: #7a3300;
+      --argos-sand: #e5d7c3;
+      --argos-cream: #faf7f2;
+      --argos-green: #1e4635;
+      --text-dark: #2c241e;
+      --text-muted: #5c5046;
+      --border: #d6c7b2;
     }
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-    body { background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.6; }
-    .container { max-width: 720px; margin: 20px auto; background: var(--card); padding: 32px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
-    .badge { display: inline-block; background: #e6f4ea; color: var(--primary); font-weight: 700; font-size: 0.85rem; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
-    h1 { color: var(--primary); font-size: 1.75rem; margin-top: 0; line-height: 1.25; }
-    .intro { color: var(--muted); margin-bottom: 24px; }
-    .key-facts { background: #f3f4f6; border-left: 4px solid var(--primary); padding: 14px 18px; border-radius: 6px; margin-bottom: 24px; font-size: 0.95rem; }
-    .form-group { margin-bottom: 16px; }
-    label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95rem; }
-    input[type="text"], input[type="email"], select {
-      width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem;
+
+    * { box-sizing: border-box; }
+    body {
+      background-color: var(--argos-cream);
+      color: var(--text-dark);
+      font-family: 'Open Sans', sans-serif;
+      margin: 0;
+      padding: 20px 14px;
+      line-height: 1.6;
     }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(44, 36, 30, 0.08);
+      border: 1px solid var(--argos-sand);
+    }
+
+    /* En-tête accrocheur */
+    .hero {
+      background: linear-gradient(135deg, var(--argos-green) 0%, #143225 100%);
+      color: #ffffff;
+      padding: 36px 32px;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--argos-brown);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin: 0 0 14px 0;
+      line-height: 1.25;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: #e6efe9;
+      max-width: 640px;
+      margin: 0 auto 20px auto;
+    }
+    .btn-rapport {
+      display: inline-block;
+      background: #ffffff;
+      color: var(--argos-green);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .btn-rapport:hover {
+      background: var(--argos-sand);
+      transform: translateY(-1px);
+    }
+
+    /* Chiffres chocs */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: var(--argos-sand);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-box {
+      padding: 18px 14px;
+      text-align: center;
+      border-right: 1px solid rgba(156, 66, 0, 0.15);
+    }
+    .stat-box:last-child { border-right: none; }
+    .stat-num {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--argos-brown);
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+    @media (max-width: 650px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-box { border-right: none; border-bottom: 1px solid rgba(156, 66, 0, 0.15); }
+      .hero h1 { font-size: 1.5rem; }
+    }
+
+    /* Corps du formulaire */
+    .content { padding: 32px; }
+    .step-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--argos-brown);
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .step-badge {
+      background: var(--argos-brown);
+      color: #fff;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
     @media (max-width: 600px) { .row { grid-template-columns: 1fr; } }
-    .checkbox-group { display: flex; align-items: flex-start; gap: 10px; background: #fffbeb; border: 1px solid #fde68a; padding: 12px; border-radius: 8px; margin: 20px 0; }
-    .checkbox-group input { margin-top: 4px; transform: scale(1.2); cursor: pointer; }
-    .checkbox-group label { font-weight: 400; font-size: 0.9rem; margin: 0; cursor: pointer; }
-    button {
-      width: 100%; background: var(--primary); color: #fff; border: none; padding: 14px;
-      font-size: 1.05rem; font-weight: 700; border-radius: 8px; cursor: pointer; transition: background 0.2s;
+
+    label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; }
+    input[type="text"], input[type="email"], textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #fff;
+      color: var(--text-dark);
     }
-    button:hover { background: #143326; }
-    .note { font-size: 0.82rem; color: var(--muted); text-align: center; margin-top: 14px; }
-    #confirmation { display: none; background: #ecfdf5; border: 1px solid #10b981; color: #065f46; padding: 16px; border-radius: 8px; margin-top: 20px; }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--argos-brown);
+    }
+
+    /* Zone message modifiable */
+    .message-box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .btn-reset {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-reset:hover { background: var(--argos-cream); color: var(--text-dark); }
+    textarea {
+      min-height: 260px;
+      line-height: 1.55;
+      background: var(--argos-cream);
+      resize: vertical;
+    }
+
+    /* Opt-in Brevo */
+    .optin-box {
+      background: #f5efe6;
+      border: 1.5px solid var(--argos-sand);
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin: 22px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .optin-box input {
+      margin-top: 4px;
+      transform: scale(1.25);
+      accent-color: var(--argos-brown);
+      cursor: pointer;
+    }
+    .optin-box label {
+      font-weight: 400;
+      font-size: 0.9rem;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    /* Boutons d'action */
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--argos-brown);
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border: none;
+      padding: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-submit:hover { background: var(--argos-brown-dark); }
+
+    .btn-copy {
+      width: 100%;
+      background: #ffffff;
+      color: var(--argos-green);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      border: 1.5px solid var(--argos-green);
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-copy:hover { background: #eef5f1; }
+
+    .recipients-info {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    #feedback-box {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #e8f5ee;
+      border: 1px solid #8ec9ab;
+      color: #143225;
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <span class="badge">BILAN 5 ANS · LOI DU 30 NOVEMBRE 2021</span>
-  <h1>Des textes sur le papier, mais où sont les contrôles et les moyens ?</h1>
-  <p class="intro">
-    Cinq ans après l'adoption de la loi contre la maltraitance animale, l'expérimentation sur les chats errants arrive à son terme le <strong>30 novembre 2026</strong>. Interpellez directement le Gouvernement pour exiger des actes concrets.
-  </p>
-
-  <div class="key-facts">
-    <strong>Ce que montre le bilan d'application :</strong><br>
-    • <strong>31 mois</strong> se sont écoulés entre l'interdiction de vente en animalerie et sa sanction (août 2026).<br>
-    • Le contrôle des annonces en ligne <strong>« fait encore largement défaut »</strong> selon le Sénat.<br>
-    • <strong>Environ un chat sur deux</strong> n'est toujours pas identifié, et le financement durable de la stérilisation reste en suspens.
+  <div class="hero">
+    <span class="hero-tag">🐾 Bilan 5 ans · Loi du 30 novembre 2021</span>
+    <h1>5 ans de promesses : il est temps de passer des textes aux actes !</h1>
+    <p>
+      Le 30 novembre 2026 marque les 5 ans de la loi contre la maltraitance animale — et la fin de l'expérimentation sur les chats errants. À l'occasion de la publication de notre bilan citoyen, interpellons ensemble le Gouvernement.
+    </p>
+    <!-- ⚠️ REMPLACEZ LE LIEN CI-DESSOUS PAR L'URL DE VOTRE RAPPORT ARGOS 42 -->
+    <a href="https://VOTRE-LIEN-VERS-LE-RAPPORT-ARGOS42.FR" target="_blank" rel="noopener" class="btn-rapport">
+      📄 Lire le rapport complet d'Argos 42
+    </a>
   </div>
 
-  <form id="campagne-form">
-    <div class="form-group">
-      <label for="theme">Choisissez votre message d'interpellation :</label>
-      <select id="theme">
-        <option value="chats">Urgence 30 novembre : bilan et financement durable pour les chats errants</option>
-        <option value="global">Bilan des 5 ans : publier les chiffres de contrôle et encadrer la vente en ligne</option>
-      </select>
+  <div class="stats-grid">
+    <div class="stat-box">
+      <span class="stat-num">31 mois</span>
+      <span class="stat-label">de retard pour sanctionner la vente en animalerie</span>
     </div>
-
-    <div class="row">
-      <div class="form-group">
-        <label for="prenom">Prénom *</label>
-        <input type="text" id="prenom" required placeholder="Ex. Camille">
-      </div>
-      <div class="form-group">
-        <label for="nom">Nom *</label>
-        <input type="text" id="nom" required placeholder="Ex. Martin">
-      </div>
+    <div class="stat-box">
+      <span class="stat-num">~ 1 sur 2</span>
+      <span class="stat-label">chat toujours non identifié en France</span>
     </div>
-
-    <div class="row">
-      <div class="form-group">
-        <label for="email">Votre adresse email *</label>
-        <input type="email" id="email" required placeholder="camille@exemple.fr">
-      </div>
-      <div class="form-group">
-        <label for="cp">Code postal *</label>
-        <input type="text" id="cp" required placeholder="Ex. 42000">
-      </div>
+    <div class="stat-box">
+      <span class="stat-num">30 nov. 2026</span>
+      <span class="stat-label">échéance du rapport sur les chats errants</span>
     </div>
+  </div>
 
-    <div class="checkbox-group">
-      <input type="checkbox" id="optin-brevo">
-      <label for="optin-brevo">
-        J'accepte de m'inscrire à la newsletter d'<strong>Argos 42</strong> pour suivre l'avancée de cette campagne et les actions de protection animale (désinscription possible à tout moment).
-      </label>
-    </div>
+  <div class="content">
+    <form id="interpellation-form">
+      <h2 class="step-title"><span class="step-badge">1</span> Vos coordonnées (pour signer le courrier)</h2>
+      
+      <div class="row">
+        <div>
+          <label for="prenom">Prénom *</label>
+          <input type="text" id="prenom" required placeholder="Ex. Camille">
+        </div>
+        <div>
+          <label for="nom">Nom *</label>
+          <input type="text" id="nom" required placeholder="Ex. Martin">
+        </div>
+      </div>
 
-    <button type="submit">Ouvrir et envoyer mon email d'interpellation</button>
-    <p class="note">Votre messagerie s'ouvrira avec le courrier pré-rempli et une copie cachée (CCI) adressée à Argos 42 pour comptabiliser les envois.</p>
-  </form>
+      <div class="row">
+        <div>
+          <label for="email">Votre email *</label>
+          <input type="email" id="email" required placeholder="camille@exemple.fr">
+        </div>
+        <div>
+          <label for="cp">Code postal *</label>
+          <input type="text" id="cp" required placeholder="Ex. 42000">
+        </div>
+      </div>
 
-  <div id="confirmation">
-    <strong>Merci pour votre mobilisation !</strong><br>
-    Si votre messagerie ne s'est pas ouverte automatiquement, vérifiez vos fenêtres bloquées ou envoyez votre message à : <code>cabinet-ministre@agriculture.gouv.fr</code> et <code>premier-ministre@cab.pm.gouv.fr</code>.
+      <div class="message-box-header">
+        <h2 class="step-title" style="margin:0;"><span class="step-badge">2</span> Votre message (modifiable si vous le souhaitez)</h2>
+        <button type="button" class="btn-reset" id="reset-text">↺ Rétablir le texte d'origine</button>
+      </div>
+      <textarea id="corps-message" required></textarea>
+
+      <div class="optin-box">
+        <input type="checkbox" id="optin-brevo">
+        <label for="optin-brevo">
+          J'accepte de recevoir les e-mails d'<strong>Argos 42</strong> pour suivre les résultats de cette interpellation et nos actions de protection animale (désinscription possible à tout moment).
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn-submit">✉️ Envoyer mon email d'interpellation</button>
+        <button type="button" class="btn-copy" id="copy-btn">📋 Pas de logiciel mail ? Copier le texte et les destinataires</button>
+      </div>
+
+      <p class="recipients-info">
+        Destinataires : <strong>Matignon</strong> & <strong>Ministère de l'Agriculture</strong> · Copie cachée (CCI) : <strong>Argos 42</strong> (pour comptabiliser la mobilisation).
+      </p>
+    </form>
+
+    <div id="feedback-box"></div>
   </div>
 </div>
 
-<!-- Iframe invisible permettant d'envoyer l'inscription à Brevo sans recharger la page -->
+<!-- Formulaire invisible Brevo -->
 <iframe name="brevo-target" style="display:none;"></iframe>
 <form id="brevo-hidden-form" action="https://515fee98.sibforms.com/serve/MUIFAOE9-0WLL55EQ3YiAHCDYCmPg3R_DQgyC_eC939oRa2x4yjKPD8pvZ3QDCNK_KTRgXkp8rdILxxZfKlDKyvmP6x-w8FErSqy6F6wk2AAgBb3UEWb_RC1q0vqXGOKm8KWXP7KjE4OvqI1Ln7MIaOPJJ_wOV484hwumBhmanIPVV0dWaLHr1u2QVynKGiJsjRjXEQ36-aDqk-7" method="POST" target="brevo-target" style="display:none;">
   <input type="email" name="EMAIL" id="brevo-email">
@@ -117,68 +367,85 @@
 </form>
 
 <script>
-  document.getElementById('campagne-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+  // ⚠️ REMPLACEZ LE LIEN DU RAPPORT DANS LE TEXTE CI-DESSOUS ÉGALEMENT :
+  const LIEN_RAPPORT = "https://VOTRE-LIEN-VERS-LE-RAPPORT-ARGOS42.FR";
+  const DESTINATAIRES = "cabinet-ministre@agriculture.gouv.fr,premier-ministre@cab.pm.gouv.fr";
+  const CCI_ARGOS = "ael@association-argos42.com";
+  const SUJET_EMAIL = "5 ans de la loi du 30 novembre 2021 : publions les bilans et donnons des moyens concrets";
 
-    const theme = document.getElementById('theme').value;
+  const texteOriginal = `Monsieur le Premier ministre, Monsieur le Ministre,
+
+Le 30 novembre 2026 marque les cinq ans de la loi visant à lutter contre la maltraitance animale — ainsi que le terme de l'expérimentation sur la gestion des chats errants prévue à son article 12.
+
+À cette occasion, le rapport d'analyse publié par l'association Argos 42 (${LIEN_RAPPORT}) met en lumière un décalage préoccupant entre les ambitions de la loi et sa mise en œuvre sur le terrain :
+- Il a fallu attendre août 2026, soit 31 mois après l'entrée en vigueur de l'interdiction, pour que la vente de chiens et de chats en animalerie devienne sanctionnable ;
+- Le contrôle de l'identification dans les annonces en ligne fait encore largement défaut selon le Sénat ;
+- Environ un chat sur deux n'est toujours pas identifié en France, tandis que l'appel à projets de 3 millions d'euros lancé en 2024 n'a pas été reconduit et que les modalités de l'enveloppe de 10 millions d'euros annoncée en juillet 2026 restent non publiées.
+
+En tant que citoyen(ne) attaché(e) à la protection animale, je vous demande :
+1. La publication immédiate du rapport d'évaluation sur les chats errants (article 12) et du bilan chiffré de l'appel à projets 2024 ;
+2. La mise en place d'un financement pluriannuel pérenne pour soutenir les communes et les associations dans les campagnes de stérilisation et d'identification ;
+3. La publication d'un bilan annuel des contrôles effectués (procès-verbaux et amendes), notamment sur les ventes d'animaux en ligne.
+
+Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'expression de ma haute considération.`;
+
+  const textarea = document.getElementById('corps-message');
+  const feedbackBox = document.getElementById('feedback-box');
+  textarea.value = texteOriginal;
+
+  // Bouton rétablir le texte
+  document.getElementById('reset-text').addEventListener('click', () => {
+    textarea.value = texteOriginal;
+  });
+
+  // Fonction d'inscription Brevo
+  function inscrireBrevoSiCoche() {
+    const optin = document.getElementById('optin-brevo').checked;
+    const email = document.getElementById('email').value.trim();
     const prenom = document.getElementById('prenom').value.trim();
     const nom = document.getElementById('nom').value.trim();
-    const email = document.getElementById('email').value.trim();
     const cp = document.getElementById('cp').value.trim();
-    const optin = document.getElementById('optin-brevo').checked;
 
-    // 1. Inscription Brevo silencieuse si la case est cochée
-    if (optin) {
+    if (optin && email) {
       document.getElementById('brevo-email').value = email;
       document.getElementById('brevo-prenom').value = prenom;
       document.getElementById('brevo-nom').value = nom;
       document.getElementById('brevo-cp').value = cp;
       document.getElementById('brevo-hidden-form').submit();
     }
+  }
 
-    // 2. Paramètres de l'email d'interpellation
-    const destinataire = 'cabinet-ministre@agriculture.gouv.fr,premier-ministre@cab.pm.gouv.fr';
-    const cciArgos = 'ael@association-argos42.com';
+  // Envoi principal via client mail
+  document.getElementById('interpellation-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    inscrireBrevoSiCoche();
 
-    let sujet = '';
-    let corps = '';
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom = document.getElementById('nom').value.trim();
+    const cp = document.getElementById('cp').value.trim();
+    const corpsComplet = `${textarea.value.trim()}\n\n${prenom} ${nom} (${cp})`;
 
-    if (theme === 'chats') {
-      sujet = "Loi du 30 novembre 2021 : bilan et financement durable pour les chats errants";
-      corps = `Monsieur le Premier ministre, Monsieur le Ministre,
+    feedbackBox.style.display = 'block';
+    feedbackBox.innerHTML = `<strong>🐾 Merci ${prenom} !</strong> Votre messagerie va s'ouvrir avec votre courrier prêt à être envoyé. Si rien ne s'ouvre, utilisez le bouton <em>« Copier le texte et les destinataires »</em> juste au-dessus.`;
 
-Cinq ans après la promulgation de la loi du 30 novembre 2021 visant à lutter contre la maltraitance animale, l'expérimentation des conventions relatives à la gestion des chats errants (article 12) arrive à son terme le 30 novembre 2026.
+    window.location.href = `mailto:${DESTINATAIRES}?bcc=${CCI_ARGOS}&subject=${encodeURIComponent(SUJET_EMAIL)}&body=${encodeURIComponent(corpsComplet)}`;
+  });
 
-Alors qu'environ un chat sur deux n'est toujours pas identifié en France, la loi prévoit la remise d'un rapport d'évaluation au Parlement. De plus, l'appel à projets de 3 millions d'euros lancé en 2024 n'a pas été reconduit, et les modalités de l'enveloppe de 10 millions d'euros annoncée en juillet 2026 restent à ce jour non publiées.
+  // Bouton alternatif : Copier dans le presse-papiers (pour Webmails type Gmail/Orange/Yahoo)
+  document.getElementById('copy-btn').addEventListener('click', function() {
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom = document.getElementById('nom').value.trim();
+    const cp = document.getElementById('cp').value.trim();
+    const signature = (prenom || nom) ? `\n\n${prenom} ${nom} ${cp ? '(' + cp + ')' : ''}` : '';
 
-En tant que citoyen(ne) attaché(e) à la protection animale, je vous demande :
-1. La publication rapide du rapport d'évaluation de l'article 12 et du bilan chiffré de l'appel à projets 2024 ;
-2. La mise en place d'un financement pluriannuel pérenne pour soutenir les communes et les associations dans les campagnes d'identification et de stérilisation.
+    inscrireBrevoSiCoche();
 
-Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'expression de ma haute considération.
+    const aCopier = `À : ${DESTINATAIRES}\nCCI : ${CCI_ARGOS}\nObjet : ${SUJET_EMAIL}\n\n${textarea.value.trim()}${signature}`;
 
-${prenom} ${nom} (${cp})`;
-    } else {
-      sujet = "5 ans de la loi du 30 novembre 2021 : publier les données de contrôle et encadrer les ventes";
-      corps = `Monsieur le Premier ministre, Monsieur le Ministre,
-
-Cinq ans après la promulgation de la loi du 30 novembre 2021 visant à lutter contre la maltraitance animale, le cadre juridique existe mais son application effective reste insuffisamment documentée.
-
-Il a fallu attendre août 2026 — soit 31 mois après l'entrée en vigueur de l'interdiction — pour que la vente de chiens et de chats en animalerie devienne sanctionnable. Par ailleurs, le contrôle de l'identification dans les annonces en ligne fait encore largement défaut selon le Sénat, et les contournements persistent (vente en ligne avec retrait en magasin, salons consacrés aux animaux).
-
-En tant que citoyen(ne) attaché(e) à la protection animale, je vous demande :
-1. La publication d'un bilan annuel des contrôles effectués (nombre de contrôles, procès-verbaux et amendes) et un calendrier précis pour la campagne de contrôles de la DGCCRF sur les ventes en ligne ;
-2. La délivrance du certificat d'engagement et de connaissance uniquement via le fichier national I-CAD pour éviter tout antidatage ;
-3. La notification à la Commission européenne, avant le 31 août 2028, des règles françaises plus strictes, dont l'interdiction de vente en animalerie.
-
-Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'expression de ma haute considération.
-
-${prenom} ${nom} (${cp})`;
-    }
-
-    // 3. Affichage du message de confirmation et ouverture du client mail
-    document.getElementById('confirmation').style.display = 'block';
-    window.location.href = `mailto:${destinataire}?bcc=${cciArgos}&subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+    navigator.clipboard.writeText(aCopier).then(() => {
+      feedbackBox.style.display = 'block';
+      feedbackBox.innerHTML = `<strong>📋 Texte copié !</strong> Il ne vous reste plus qu'à ouvrir votre boîte mail (Gmail, Yahoo, Orange, etc.), cliquer sur <em>Nouveau message</em> et coller le contenu (Ctrl+V ou clic droit > Coller).`;
+    });
   });
 </script>
 
