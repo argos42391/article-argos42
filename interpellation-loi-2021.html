@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>5 ans de la loi maltraitance animale : exigeons des actes ! | Argos 42</title>
+  <title>5 ans de la loi maltraitance animale : exigeons des actes ! | ARGOS 42</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -11,46 +11,52 @@
     :root {
       --argos-brown: #9c4200;
       --argos-brown-dark: #7a3300;
+      --argos-brown-soft: rgba(156, 66, 0, 0.1);
       --argos-sand: #e5d7c3;
       --argos-cream: #faf7f2;
+      --surface: #ffffff;
+      --surface-warm: #f6efe6;
       --text-dark: #2c241e;
       --text-muted: #5c5046;
       --border: #d6c7b2;
     }
 
-    * { box-sizing: border-box; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     body {
       background-color: var(--argos-cream);
       color: var(--text-dark);
       font-family: 'Open Sans', sans-serif;
       margin: 0;
-      padding: 16px 12px;
+      padding: 20px 12px;
       line-height: 1.6;
     }
 
     .container {
       max-width: 740px;
       margin: 0 auto;
-      background: #ffffff;
+      background: var(--surface);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 8px 28px rgba(44, 36, 30, 0.08);
+      box-shadow: 0 10px 30px rgba(44, 36, 30, 0.08);
       border: 1px solid var(--argos-sand);
     }
 
-    /* En-tête épuré aux couleurs Argos 42 */
     .hero {
-      background-color: var(--argos-sand);
+      background: linear-gradient(180deg, #ede0ce 0%, var(--argos-sand) 100%);
       border-bottom: 3px solid var(--argos-brown);
-      padding: 28px 24px 24px 24px;
+      padding: 30px 24px 26px 24px;
       text-align: center;
     }
+
     .hero-tag {
       display: inline-block;
       background: var(--argos-brown);
       color: #ffffff;
       font-family: 'Montserrat', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -58,29 +64,37 @@
       border-radius: 50px;
       margin-bottom: 12px;
     }
+
     .hero h1 {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.65rem;
       font-weight: 800;
       color: var(--text-dark);
-      margin: 0 0 16px 0;
+      margin: 0 0 12px 0;
       line-height: 1.25;
     }
 
-    /* Badge Compteur en direct */
+    .hero-subtitle {
+      margin: 0 auto 18px auto;
+      max-width: 560px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
     .counter-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: #ffffff;
+      background: var(--surface);
       border: 1.5px solid var(--argos-brown);
       color: var(--text-dark);
       padding: 7px 16px;
       border-radius: 50px;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      box-shadow: 0 2px 8px rgba(156, 66, 0, 0.1);
+      box-shadow: 0 2px 8px var(--argos-brown-soft);
     }
+
     .counter-dot {
       width: 9px;
       height: 9px;
@@ -88,16 +102,22 @@
       border-radius: 50%;
       animation: pulse 1.8s infinite;
     }
+
     .counter-number {
       font-family: 'Montserrat', sans-serif;
       font-weight: 800;
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       color: var(--argos-brown);
     }
+
     @keyframes pulse {
       0% { transform: scale(0.95); opacity: 1; }
       50% { transform: scale(1.35); opacity: 0.5; }
       100% { transform: scale(0.95); opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .counter-dot { animation: none; }
     }
 
     @media (max-width: 600px) {
@@ -105,9 +125,19 @@
       .hero h1 { font-size: 1.35rem; }
     }
 
-    /* Corps du formulaire */
-    .content { padding: 28px 26px; }
-    @media (max-width: 600px) { .content { padding: 22px 18px; } }
+    .content {
+      padding: 28px 26px;
+    }
+
+    @media (max-width: 600px) {
+      .content { padding: 22px 18px; }
+    }
+
+    fieldset {
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
 
     .step-title {
       font-family: 'Montserrat', sans-serif;
@@ -119,9 +149,10 @@
       align-items: center;
       gap: 10px;
     }
+
     .step-badge {
       background: var(--argos-brown);
-      color: #fff;
+      color: #ffffff;
       width: 26px;
       height: 26px;
       border-radius: 50%;
@@ -132,28 +163,46 @@
       flex-shrink: 0;
     }
 
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-    @media (max-width: 600px) { .row { grid-template-columns: 1fr; gap: 10px; } }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
 
-    label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 4px; color: var(--text-dark); }
-    input[type="text"], input[type="email"], textarea {
+    @media (max-width: 600px) {
+      .row { grid-template-columns: 1fr; gap: 10px; }
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+      color: var(--text-dark);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
       width: 100%;
       padding: 11px 14px;
       border: 1.5px solid var(--border);
       border-radius: 8px;
       font-size: 0.95rem;
       font-family: inherit;
-      background: #fff;
+      background: var(--surface);
       color: var(--text-dark);
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    input:focus, textarea:focus {
+
+    input:focus,
+    textarea:focus {
       outline: none;
       border-color: var(--argos-brown);
-      box-shadow: 0 0 0 3px rgba(156, 66, 0, 0.12);
+      box-shadow: 0 0 0 3px rgba(156, 66, 0, 0.14);
     }
 
-    /* Zone message modifiable */
     .message-box-header {
       display: flex;
       justify-content: space-between;
@@ -163,45 +212,53 @@
       flex-wrap: wrap;
       gap: 8px;
     }
+
     .btn-reset {
-      background: #ffffff;
+      background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text-muted);
       font-size: 0.8rem;
       font-weight: 600;
-      padding: 5px 10px;
+      padding: 6px 11px;
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.15s;
     }
-    .btn-reset:hover { background: var(--argos-sand); color: var(--text-dark); }
+
+    .btn-reset:hover {
+      background: var(--argos-sand);
+      color: var(--text-dark);
+    }
+
     textarea {
-      min-height: 270px;
+      min-height: 280px;
       line-height: 1.55;
       background: var(--argos-cream);
       resize: vertical;
     }
 
-    /* Opt-in Brevo & RGPD */
     .optin-box {
-      background: #f6efe6;
+      background: var(--surface-warm);
       border: 1.5px solid var(--argos-sand);
       padding: 14px 16px;
       border-radius: 10px;
       margin: 20px 0 18px 0;
     }
+
     .optin-row {
       display: flex;
       align-items: flex-start;
       gap: 12px;
     }
+
     .optin-row input {
-      margin-top: 4px;
-      transform: scale(1.25);
+      margin-top: 3px;
+      transform: scale(1.2);
       accent-color: var(--argos-brown);
       cursor: pointer;
       flex-shrink: 0;
     }
+
     .optin-row label {
       font-weight: 400;
       font-size: 0.9rem;
@@ -209,6 +266,7 @@
       cursor: pointer;
       line-height: 1.45;
     }
+
     .rgpd-notice {
       margin: 10px 0 0 0;
       padding-top: 8px;
@@ -217,23 +275,24 @@
       color: var(--text-muted);
       line-height: 1.4;
     }
+
     .rgpd-notice a {
       color: var(--argos-brown);
       text-decoration: underline;
     }
 
-    /* Boutons d'action */
     .actions {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
+
     .btn-submit {
       width: 100%;
       background: var(--argos-brown);
       color: #ffffff;
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       border: none;
       padding: 15px;
@@ -241,12 +300,18 @@
       cursor: pointer;
       transition: background 0.2s, transform 0.1s;
     }
-    .btn-submit:hover { background: var(--argos-brown-dark); }
-    .btn-submit:active { transform: scale(0.99); }
+
+    .btn-submit:hover {
+      background: var(--argos-brown-dark);
+    }
+
+    .btn-submit:active {
+      transform: scale(0.99);
+    }
 
     .btn-copy {
       width: 100%;
-      background: #ffffff;
+      background: var(--surface);
       color: var(--argos-brown);
       font-family: 'Montserrat', sans-serif;
       font-size: 0.92rem;
@@ -257,7 +322,10 @@
       cursor: pointer;
       transition: background 0.2s;
     }
-    .btn-copy:hover { background: #fdf6ef; }
+
+    .btn-copy:hover {
+      background: #fdf6ef;
+    }
 
     .recipients-info {
       font-size: 0.82rem;
@@ -270,88 +338,98 @@
     #feedback-box {
       display: none;
       margin-top: 18px;
-      padding: 15px;
+      padding: 15px 16px;
       border-radius: 10px;
       background: #fdf6ef;
       border: 1.5px solid var(--argos-brown);
       color: var(--text-dark);
       font-size: 0.92rem;
     }
+
+    #feedback-box a {
+      color: var(--argos-brown);
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="hero">
-    <span class="hero-tag">🐾 Bilan 5 ans · Loi du 30 novembre 2021</span>
-    <h1>5 ans de promesses : il est temps de passer des textes aux actes !</h1>
-    
-    <!-- Compteur en direct -->
+  <header class="hero">
+    <span class="hero-tag">🐾 Rapport d'observation · 5 ans de la loi du 30 novembre 2021</span>
+    <h1>5 ans de promesses : exigeons des actes et de la transparence</h1>
+    <p class="hero-subtitle">
+      Interpellez les pouvoirs publics en deux minutes à partir de notre rapport d'observation sur l'application de la loi aux animaux de compagnie.
+    </p>
+
     <div class="counter-pill" aria-live="polite">
-      <span class="counter-dot"></span>
-      <span>Déjà <span class="counter-number" id="compteur-val">...</span> interpellations envoyées</span>
+      <span class="counter-dot" aria-hidden="true"></span>
+      <span><span class="counter-number" id="compteur-val">—</span> interpellations enregistrées</span>
     </div>
-  </div>
+  </header>
 
-  <div class="content">
-    <form id="interpellation-form">
-      <h2 class="step-title"><span class="step-badge">1</span> Vos coordonnées (pour signer le courrier)</h2>
-      
-      <div class="row">
-        <div>
-          <label for="prenom">Prénom *</label>
-          <input type="text" id="prenom" required placeholder="Ex. Camille" autocomplete="given-name">
-        </div>
-        <div>
-          <label for="nom">Nom *</label>
-          <input type="text" id="nom" required placeholder="Ex. Martin" autocomplete="family-name">
-        </div>
-      </div>
+  <main class="content">
+    <form id="interpellation-form" novalidate>
+      <fieldset>
+        <legend class="step-title"><span class="step-badge">1</span> Vos coordonnées (pour signer le courrier)</legend>
 
-      <div class="row">
-        <div>
-          <label for="email">Votre email *</label>
-          <input type="email" id="email" required placeholder="camille@exemple.fr" autocomplete="email">
+        <div class="row">
+          <div>
+            <label for="prenom">Prénom *</label>
+            <input type="text" id="prenom" name="prenom" required placeholder="Ex. Camille" autocomplete="given-name">
+          </div>
+          <div>
+            <label for="nom">Nom *</label>
+            <input type="text" id="nom" name="nom" required placeholder="Ex. Martin" autocomplete="family-name">
+          </div>
         </div>
-        <div>
-          <label for="cp">Code postal *</label>
-          <input type="text" id="cp" required placeholder="Ex. 42000" autocomplete="postal-code">
+
+        <div class="row">
+          <div>
+            <label for="email">Votre e-mail *</label>
+            <input type="email" id="email" name="email" required placeholder="camille@exemple.fr" autocomplete="email">
+          </div>
+          <div>
+            <label for="cp">Code postal *</label>
+            <input type="text" id="cp" name="cp" required placeholder="Ex. 42000" autocomplete="postal-code" inputmode="numeric">
+          </div>
         </div>
-      </div>
+      </fieldset>
 
       <div class="message-box-header">
-        <h2 class="step-title" style="margin:0;"><span class="step-badge">2</span> Votre message (personnalisable)</h2>
+        <label for="corps-message" class="step-title" style="margin:0;">
+          <span class="step-badge">2</span> Votre message (modifiable)
+        </label>
         <button type="button" class="btn-reset" id="reset-text">↺ Rétablir le texte d'origine</button>
       </div>
-      <textarea id="corps-message" required aria-label="Texte du courrier d'interpellation"></textarea>
+      <textarea id="corps-message" name="corps-message" required aria-label="Texte du courrier d'interpellation"></textarea>
 
       <div class="optin-box">
         <div class="optin-row">
-          <input type="checkbox" id="optin-brevo">
+          <input type="checkbox" id="optin-brevo" name="optin-brevo">
           <label for="optin-brevo">
-            J'accepte de recevoir par e-mail les actualités d'<strong>Argos 42</strong> et le suivi de cette mobilisation (facultatif).
+            J'accepte de recevoir par e-mail les actualités d'<strong>ARGOS 42</strong> et le suivi de cette mobilisation (facultatif).
           </label>
         </div>
         <p class="rgpd-notice">
-          <strong>Protection des données (RGPD) :</strong> Vos coordonnées servent uniquement à signer votre courrier. Si vous cochez la case ci-dessus, elles sont transmises à <strong>Argos 42</strong> via Brevo pour l'envoi de notre newsletter. Vous pouvez retirer votre consentement à tout moment via le lien de désinscription présent dans nos e-mails. <a id="link-rgpd" href="https://association-argos42.com" target="_blank" rel="noopener">Politique de confidentialité</a>.
+          <strong>Protection des données (RGPD) :</strong> Vos coordonnées servent à signer votre courrier. Si vous cochez la case ci-dessus, elles sont transmises à <strong>ARGOS 42</strong> via Brevo pour l'envoi de notre lettre d'information. Vous pouvez retirer votre consentement à tout moment via le lien de désinscription présent dans nos messages. <a id="link-rgpd" href="https://argos42.org/l-association-argos-42-missions-valeurs/politique-de-confidentialite/" target="_blank" rel="noopener noreferrer">Politique de confidentialité</a>.
         </p>
       </div>
 
       <div class="actions">
-        <button type="submit" class="btn-submit">✉️ Envoyer mon email d'interpellation</button>
-        <button type="button" class="btn-copy" id="copy-btn">📋 Pas de logiciel mail ? Copier le texte et les destinataires</button>
+        <button type="submit" class="btn-submit">✉️ Envoyer mon e-mail d'interpellation</button>
+        <button type="button" class="btn-copy" id="copy-btn">📋 Webmail ? Copier le texte et les destinataires</button>
       </div>
 
       <p class="recipients-info">
-        Destinataires : <strong>Matignon</strong> & <strong>Ministère de l'Agriculture</strong> (avec copie cachée à Argos 42 pour le suivi).
+        Destinataires : <strong>Matignon</strong> et <strong>Ministère de l'Agriculture</strong> (copie cachée à ARGOS 42 pour le suivi).
       </p>
     </form>
 
     <div id="feedback-box" role="status" aria-live="polite"></div>
-  </div>
+  </main>
 </div>
 
-<!-- Formulaire invisible Brevo -->
 <iframe name="brevo-target" style="display:none;" title="Envoi newsletter"></iframe>
 <form id="brevo-hidden-form" action="https://515fee98.sibforms.com/serve/MUIFAOE9-0WLL55EQ3YiAHCDYCmPg3R_DQgyC_eC939oRa2x4yjKPD8pvZ3QDCNK_KTRgXkp8rdILxxZfKlDKyvmP6x-w8FErSqy6F6wk2AAgBb3UEWb_RC1q0vqXGOKm8KWXP7KjE4OvqI1Ln7MIaOPJJ_wOV484hwumBhmanIPVV0dWaLHr1u2QVynKGiJsjRjXEQ36-aDqk-7" method="POST" target="brevo-target" style="display:none;">
   <input type="email" name="EMAIL" id="brevo-email">
@@ -364,63 +442,65 @@
 </form>
 
 <script>
-  // ⚠️ À PERSONNALISER :
-  const LIEN_RAPPORT = "https://VOTRE-LIEN-VERS-LE-RAPPORT-ARGOS42.FR";
-  const LIEN_CONFIDENTIALITE = "https://association-argos42.com/politique-de-confidentialite";
+  const LIEN_RAPPORT = "https://argos42.org/wp-content/uploads/2026/11/Rapport-observation-et-plaidoyer-5-ans-de-la-loi-de-2021.pdf";
+  const LIEN_CONFIDENTIALITE = "https://argos42.org/l-association-argos-42-missions-valeurs/politique-de-confidentialite/";
   const DESTINATAIRES = "cabinet-ministre@agriculture.gouv.fr,premier-ministre@cab.pm.gouv.fr";
   const CCI_ARGOS = "ael@association-argos42.com";
   const SUJET_EMAIL = "5 ans de la loi du 30 novembre 2021 : publions les bilans et donnons des moyens concrets";
-  const COMPTEUR_BASE = 0; // Vous pouvez mettre un chiffre de départ ici si vous avez déjà reçu des mails (ex: 45)
+  const COMPTEUR_BASE = 0;
 
   document.getElementById('link-rgpd').href = LIEN_CONFIDENTIALITE;
 
-  // --- GESTION DU COMPTEUR EN DIRECT ---
+  // --- COMPTEUR EN DIRECT ---
   const COUNTER_URL = "https://api.counterapi.dev/v1/argos42-campagnes/loi-2021-5ans";
   const compteurEl = document.getElementById('compteur-val');
 
+  function formaterTotal(valeurApi) {
+    return ((Number(valeurApi) || 0) + COMPTEUR_BASE).toLocaleString('fr-FR');
+  }
+
   async function chargerCompteur() {
     try {
-      const res = await fetch(COUNTER_URL);
+      const res = await fetch(COUNTER_URL, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      const total = (data.count || 0) + COMPTEUR_BASE;
-      compteurEl.textContent = total.toLocaleString('fr-FR');
+      compteurEl.textContent = formaterTotal(data.count);
     } catch (e) {
-      compteurEl.textContent = (COMPTEUR_BASE > 0 ? COMPTEUR_BASE : "1");
+      compteurEl.textContent = COMPTEUR_BASE > 0 ? COMPTEUR_BASE.toLocaleString('fr-FR') : "0";
     }
   }
 
   async function incrementerCompteur() {
-    // Évite qu'une même personne gonfle le compteur en cliquant 10 fois de suite
-    if (localStorage.getItem('argos_loi2021_compte') === '1') return;
+    if (sessionStorage.getItem('argos_loi2021_session_compte') === '1') return;
     try {
-      const res = await fetch(`${COUNTER_URL}/up`);
+      const res = await fetch(`${COUNTER_URL}/up`, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      const total = (data.count || 0) + COMPTEUR_BASE;
-      compteurEl.textContent = total.toLocaleString('fr-FR');
-      localStorage.setItem('argos_loi2021_compte', '1');
+      compteurEl.textContent = formaterTotal(data.count);
+      sessionStorage.setItem('argos_loi2021_session_compte', '1');
     } catch (e) {
-      console.error("Erreur compteur", e);
+      // Silencieux pour ne pas perturber l'envoi du courriel
     }
   }
 
   chargerCompteur();
 
   // --- TEXTE ET SIGNATURE EN DIRECT ---
-  const corpsBase = `Monsieur le Premier ministre, Monsieur le Ministre,
+  const corpsBase = `Madame, Monsieur,
 
 Le 30 novembre 2026 marque les cinq ans de la loi visant à lutter contre la maltraitance animale — ainsi que le terme de l'expérimentation sur la gestion des chats errants prévue à son article 12.
 
-À cette occasion, le rapport d'analyse publié par l'association Argos 42 (${LIEN_RAPPORT}) met en lumière un décalage préoccupant entre les ambitions de la loi et sa mise en œuvre sur le terrain :
+À cette occasion, le rapport d'observation publié par l'association ARGOS 42 (${LIEN_RAPPORT}) met en lumière un décalage préoccupant entre les ambitions de la loi et sa mise en œuvre sur le terrain :
 - Il a fallu attendre août 2026, soit 31 mois après l'entrée en vigueur de l'interdiction, pour que la vente de chiens et de chats en animalerie devienne sanctionnable ;
 - Le contrôle de l'identification dans les annonces en ligne fait encore largement défaut selon le Sénat ;
 - Environ un chat sur deux n'est toujours pas identifié en France, tandis que l'appel à projets de 3 millions d'euros lancé en 2024 n'a pas été reconduit et que les modalités de l'enveloppe de 10 millions d'euros annoncée en juillet 2026 restent non publiées.
 
-En tant que citoyen(ne) attaché(e) à la protection animale, je vous demande :
+En tant que citoyen(ne) attaché(e) à la protection animale, je demande :
 1. La publication immédiate du rapport d'évaluation sur les chats errants (article 12) et du bilan chiffré de l'appel à projets 2024 ;
 2. La mise en place d'un financement pluriannuel pérenne pour soutenir les communes et les associations dans les campagnes de stérilisation et d'identification ;
 3. La publication d'un bilan annuel des contrôles effectués (procès-verbaux et amendes), notamment sur les ventes d'animaux en ligne.
 
-Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'expression de ma haute considération.`;
+Je vous prie d'agréer l'expression de ma haute considération.`;
 
   const inputPrenom = document.getElementById('prenom');
   const inputNom = document.getElementById('nom');
@@ -455,8 +535,34 @@ Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'ex
   }
 
   initialiserTexte();
-  [inputPrenom, inputNom, inputCp].forEach(el => el.addEventListener('input', mettreAJourSignatureEnDirect));
+  [inputPrenom, inputNom, inputCp].forEach(el => {
+    el.addEventListener('input', mettreAJourSignatureEnDirect);
+  });
   document.getElementById('reset-text').addEventListener('click', initialiserTexte);
+
+  function validerFormulaire() {
+    const prenom = inputPrenom.value.trim();
+    const nom = inputNom.value.trim();
+    const email = inputEmail.value.trim();
+    const cp = inputCp.value.trim();
+    const message = textarea.value.trim();
+
+    if (!prenom || !nom || !email || !cp || !message) {
+      feedbackBox.style.display = 'block';
+      feedbackBox.innerHTML = `<strong>⚠️ Champs requis :</strong> merci de renseigner votre prénom, votre nom, votre e-mail et votre code postal avant de poursuivre.`;
+      return false;
+    }
+
+    const emailValide = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailValide) {
+      feedbackBox.style.display = 'block';
+      feedbackBox.innerHTML = `<strong>⚠️ Adresse e-mail invalide :</strong> merci de vérifier votre adresse e-mail.`;
+      inputEmail.focus();
+      return false;
+    }
+
+    return true;
+  }
 
   // --- INSCRIPTION BREVO ---
   let dejaInscritBrevo = false;
@@ -473,9 +579,11 @@ Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'ex
     }
   }
 
-  // --- ENVOI EMAIL ---
+  // --- ENVOI E-MAIL ---
   document.getElementById('interpellation-form').addEventListener('submit', function(e) {
     e.preventDefault();
+    if (!validerFormulaire()) return;
+
     inscrireBrevoSiCoche();
     incrementerCompteur();
 
@@ -483,13 +591,15 @@ Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'ex
     const corpsFinal = textarea.value.trim();
 
     feedbackBox.style.display = 'block';
-    feedbackBox.innerHTML = `<strong>🐾 Merci ${prenom} !</strong> Votre messagerie va s'ouvrir avec votre courrier prêt à être envoyé. Si rien ne s'ouvre (webmail), cliquez sur <em>« Copier le texte et les destinataires »</em> juste au-dessus.`;
+    feedbackBox.innerHTML = `<strong>🐾 Merci ${prenom} !</strong> Votre messagerie va s'ouvrir avec votre courrier prêt à être envoyé. Si rien ne s'ouvre (webmail), cliquez sur <em>« Webmail ? Copier le texte et les destinataires »</em>. Vous pouvez aussi consulter le <a href="${LIEN_RAPPORT}" target="_blank" rel="noopener noreferrer">rapport d'observation complet</a>.`;
 
     window.location.href = `mailto:${DESTINATAIRES}?bcc=${CCI_ARGOS}&subject=${encodeURIComponent(SUJET_EMAIL)}&body=${encodeURIComponent(corpsFinal)}`;
   });
 
   // --- COPIER DANS LE PRESSE-PAPIERS ---
   document.getElementById('copy-btn').addEventListener('click', function() {
+    if (!validerFormulaire()) return;
+
     inscrireBrevoSiCoche();
     incrementerCompteur();
 
@@ -497,10 +607,10 @@ Je vous prie d'agréer, Monsieur le Premier ministre, Monsieur le Ministre, l'ex
 
     navigator.clipboard.writeText(aCopier).then(() => {
       feedbackBox.style.display = 'block';
-      feedbackBox.innerHTML = `<strong>📋 Texte et destinataires copiés !</strong> Ouvrez votre boîte mail (Gmail, Orange, Yahoo…), cliquez sur <em>Nouveau message</em> et collez le contenu (Ctrl+V ou clic droit > Coller).`;
+      feedbackBox.innerHTML = `<strong>📋 Texte et destinataires copiés !</strong> Ouvrez votre webmail (Gmail, Orange, Yahoo, Outlook…), créez un nouveau message et collez le contenu (Ctrl+V ou Cmd+V).`;
     }).catch(() => {
       feedbackBox.style.display = 'block';
-      feedbackBox.innerHTML = `<strong>ℹ️ Sélectionnez et copiez le texte ci-dessus</strong> pour l'envoyer à : <code>${DESTINATAIRES}</code> (CCI : <code>${CCI_ARGOS}</code>).`;
+      feedbackBox.innerHTML = `<strong>ℹ️ Copiez manuellement le texte ci-dessus</strong> et envoyez-le à : <code>${DESTINATAIRES}</code> (CCI : <code>${CCI_ARGOS}</code>).`;
     });
   });
 </script>
